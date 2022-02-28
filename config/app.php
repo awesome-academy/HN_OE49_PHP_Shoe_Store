@@ -96,8 +96,8 @@ return [
     'fallback_locale' => 'en',
 
     'available_locales' => [
-        'English' => 'en',
-        'Vietnamese' => 'vi',
+        'En' => 'en',
+        'Vi' => 'vi',
     ],
 
     /*

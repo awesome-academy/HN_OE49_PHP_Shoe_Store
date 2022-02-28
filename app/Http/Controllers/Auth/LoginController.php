@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,36 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function redirectTo()
+    {
+        if (Auth()->user()->role_id == config('auth.roles.admin')) {
+            return route('admin');
+        } else {
+            return route('home');
+        }
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $compare = Auth()->attempt([
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ]);
+
+        if ($compare) {
+            if (Auth::user()->role_id == config('auth.roles.admin')) {
+                return redirect()
+                    ->route('admin')
+                    ->with('noti', __('welcome'));
+            } else {
+                return redirect()->route('home');
+            }
+        } else {
+            return redirect()
+                ->route('login')
+                ->with('error', __('login-fail'));
+        }
     }
 }

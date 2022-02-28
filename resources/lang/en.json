@@ -1,5 +1,6 @@
 {
     "login": "Login",
+    "logout": "Logout",
     "register": "Register",
     "create new": "Create New",
     "create": "Create",
@@ -12,6 +13,8 @@
     "password": "Password",
     "cf_pass": "Confirm password",
     "list": "List",
+    "brand": "Brands",
+    "product": "Products",
     "regisF": "Registration failed! Please try again.",
     "regisS": "Registered successfully!",
     "create success": "Created successfully!",
@@ -30,5 +33,8 @@
     "string": "The :attr must be a string.",
     "exists": "Data is invalid, update failed.",
     "delete confirm": "Are you sure you want to delete?",
-    "confirmed": "The :attr confirmation does not match."
+    "confirmed": "The :attr confirmation does not match.",
+    "type_here": "Type here...",
+    "login-fail": "Incorrect email or password! Please try again.",
+    "welcome": "Welcome to the admin page."
 }

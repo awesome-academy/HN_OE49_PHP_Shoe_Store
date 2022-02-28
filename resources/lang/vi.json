@@ -1,6 +1,7 @@
 {
     "login": "Đăng nhập",
     "register": "Đăng ký",
+    "logout": "Đăng xuất",
     "create new": "Thêm Mới",
     "create": "Thêm",
     "edit": "Sửa",
@@ -12,6 +13,8 @@
     "password": "Mật khẩu",
     "cf_pass": "Nhập lại mật khẩu",
     "list": "Danh Sách",
+    "brand": "Thương hiệu",
+    "product": "Sản phẩm",
     "regisF": "Đăng ký thất bại! Vui lòng thử lại.",
     "regisS": "Đăng ký thành công!",
     "create success": "Đã thêm thành công!",
@@ -30,5 +33,8 @@
     "string": ":attr chỉ có thể chứa các kí tự.",
     "exists": "Dữ liệu đã có, cập nhật không thành công.",
     "delete confirm": "Bạn có chắc chắn muốn xóa?",
-    "confirmed": ":attr xác nhận không khớp."
+    "confirmed": ":attr xác nhận không khớp.",
+    "type_here": "Nhập tên...",
+    "login-fail": "Sai email hoặc mật khẩu! Vui lòng thử lại.",
+    "welcome": "Chào mừng tới trang quản trị."
 } 

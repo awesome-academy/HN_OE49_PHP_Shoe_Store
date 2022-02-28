@@ -46,8 +46,8 @@ class RegisterController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'min:6', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'email', 'max:320', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'max:20', 'confirmed'],
             'phone' => ['required', 'regex:/(0[3|5|7|8|9])+([0-9]{8})\b/', 'unique:users'],
             'address' => ['required', 'max:1000'],
         ], [
@@ -57,11 +57,12 @@ class RegisterController extends Controller
             'name.max' => __('max', ['attr' => __('name'), 'value' => '255']),
             'email.required' => __('required', ['attr' => __('email')]),
             'email.email' => __('email_val'),
-            'email.max' => __('max', ['attr' => __('email'), 'value' => '255']),
+            'email.max' => __('max', ['attr' => __('email'), 'value' => '320']),
             'email.unique' => __('unique', ['attr' => __('email')]),
             'password.required' => __('required', ['attr' => __('password')]),
             'password.string' => __('string', ['attr' => __('password')]),
             'password.min' => __('min', ['attr' => __('password'), 'value' => '8']),
+            'password.max' => __('max', ['attr' => __('password'), 'value' => '20']),
             'password.confirmed' => __('confirmed', ['attr' => __('password')]),
             'phone.required' => __('required', ['attr' => __('phone')]),
             'phone.regex' => __('regex', ['attr' => __('phone')]),

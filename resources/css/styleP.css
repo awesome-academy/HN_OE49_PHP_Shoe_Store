@@ -1,0 +1,8 @@
+.nav-item.dropdown img{
+    float: left;
+    height: 40px;
+}
+
+#navbarDropdown {
+    float: left;
+}

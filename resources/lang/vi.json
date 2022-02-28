@@ -36,5 +36,12 @@
     "confirmed": ":attr xác nhận không khớp.",
     "type_here": "Nhập tên...",
     "login-fail": "Sai email hoặc mật khẩu! Vui lòng thử lại.",
-    "welcome": "Chào mừng tới trang quản trị."
+    "welcome": "Chào mừng tới trang quản trị.",
+    "no": "STT",
+    "price": "Giá",
+    "quantity": "Số lượng",
+    "img": "Ảnh",
+    "action": "Hoạt động",
+    "image": "Trường :attr phải là định dạng hình ảnh.",
+    "mimes": "Trường :attr phải là một tập tin có định dạng: png, jpg, jpeg."
 } 

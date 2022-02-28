@@ -13,6 +13,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/script.js', 'public/js')
+    .js('resources/js/delete.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .postCss('resources/css/style.css', 'public/css')
+    .postCss('resources/css/styleP.css', 'public/css')
     .sourceMaps();

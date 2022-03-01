@@ -36,5 +36,12 @@
     "confirmed": "The :attr confirmation does not match.",
     "type_here": "Type here...",
     "login-fail": "Incorrect email or password! Please try again.",
-    "welcome": "Welcome to the admin page."
+    "welcome": "Welcome to the admin page.",
+    "no": "No",
+    "price": "Price",
+    "quantity": "Quantity",
+    "img": "Image",
+    "action": "Action",
+    "mimes": "The :attr must be a file of type: png, jpg, jpeg",
+    "image": "The :attr muse be an image."
 }

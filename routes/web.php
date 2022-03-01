@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 
@@ -24,12 +25,14 @@ Route::get('/language/{locale}', [LangController::class, 'switchLang'])->name('l
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('admin', [AdminController::class, 'index'])->name('admin');
-    Route::resource('products', ProductController::class);
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admin');
+        Route::resource('brands', BrandController::class);
+        Route::resource('products', ProductController::class);
+    });
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });

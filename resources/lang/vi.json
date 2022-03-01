@@ -15,6 +15,7 @@
     "list": "Danh Sách",
     "brand": "Thương hiệu",
     "product": "Sản phẩm",
+    "function": "Chức năng",
     "regisF": "Đăng ký thất bại! Vui lòng thử lại.",
     "regisS": "Đăng ký thành công!",
     "create success": "Đã thêm thành công!",
@@ -41,7 +42,10 @@
     "price": "Giá",
     "quantity": "Số lượng",
     "img": "Ảnh",
-    "action": "Hoạt động",
     "image": "Trường :attr phải là định dạng hình ảnh.",
-    "mimes": "Trường :attr phải là một tập tin có định dạng: png, jpg, jpeg."
+    "mimes": "Trường :attr phải là một tập tin có định dạng: png, jpg, jpeg.",
+    "brand_name": "Thương hiệu",
+    "product_name": "Tên sản phẩm",
+    "desc": "Mô tả",
+    "edit brand": "Chỉnh sửa chi tiết thương hiệu"
 } 

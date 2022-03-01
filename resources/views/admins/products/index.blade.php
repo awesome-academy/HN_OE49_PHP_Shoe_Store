@@ -22,7 +22,7 @@
             <th>{{ __('brand') }}</th>
             <th>{{ __('price') }}</th>
             <th>{{ __('quantity') }}</th>
-            <th width="260px">{{ __('action') }}</th>
+            <th width="260px">{{ __('function') }}</th>
         </tr>
     
         <tr>
@@ -33,11 +33,11 @@
             <td></td>
             <td>
                 <form action="" method="POST">
-                    <a class="btn btn-info" href="">{{ __('show') }}</a>
-                    <a class="btn btn-primary" href="">{{ __('edit') }}</a>
+                    <a href="" class="me-1"><i class="fa-solid fa-eye"></i> </a>
+                    <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-delete" data-confirm="{{ __('delete confirm') }}">{{ __('delete') }}</button>
+                    <button type="submit" id="btn-del" class="btn-delete" data-confirm="{{ __('delete confirm') }}"><i class="fa-solid fa-trash"></i></button>
                 </form>
             </td>
         </tr>    

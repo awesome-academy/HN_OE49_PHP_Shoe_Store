@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         $products = Product::orderby('created_at', 'DESC')->get();
 
-        return view('products.index')->with(compact('products'));
+        return view('admins.products.index')->with(compact('products'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductController extends Controller
     {
         $brands = Brand::all();
 
-        return view('products.create')->with(compact('brands'));
+        return view('admins.products.create')->with(compact('brands'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('products.edit');
+        return view('admins.products.edit');
     }
 
     /**

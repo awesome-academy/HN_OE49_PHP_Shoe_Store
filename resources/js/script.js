@@ -1,10 +1,11 @@
-document.getElementById('navbarDropdown').addEventListener("click", function() {
-    document.getElementById('dd-menu').classList.toggle('show');
-})
+$(document).ready(function(){ 
+    $('#navbarDropdown').click(function() {
+        $('#dd-menu').toggleClass('show');
+    })
 
-document.getElementById('logout').addEventListener("click", function(event) {
-    event.preventDefault();
-    document.getElementById('logout-form').submit();
-})
-
+    $('#logout').click(function(event) {
+        event.preventDefault();
+        $('#logout-form').submit();
+    })
+});
 

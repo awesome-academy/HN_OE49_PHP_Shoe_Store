@@ -15,8 +15,8 @@
 
     <form action="{{ route('products.store') }}" method="POST">
         @csrf
-        <div class="form-group">
-            <label for="name">{{ __('name') }}</label>
+        <div class="form-group mb-3">
+            <label for="name">{{ __('product_name') }}</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
             @error('name') 
                 <span class="alert-danger"> {{ $message }}</span>
@@ -32,7 +32,7 @@
                 @enderror
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group mb-3 col-md-6">
                 <label for="quantity">{{ __('quantity') }}</label>
                 <input type="text" name="quantity" id="quantity" class="form-control" value="{{ old('quantity') }}">
                 @error('quantity') 
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="">{{ __('brand') }}</label>
             <select class="form-select">
                 <option value=""></option>
@@ -51,15 +51,15 @@
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="image">{{ __('image') }}</label>
+        <div class="form-group mb-3">
+            <label for="image">{{ __('img') }}</label>
             <input type="file" class="form-control" id="image">
             @error('') 
                 <span class="alert-danger"> {{ $message }}</span>
             @enderror
         </div>
 
-        <div class="tile-footer">
+        <div class="tile-footer mb-3">
             <div class="row d-print-none mt-2">
                 <div class="col-12 text-right">
                     <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>{{ __('submit') }}</button>

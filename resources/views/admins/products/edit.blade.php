@@ -13,49 +13,65 @@
 
     <h4>{{ __('edit') ." " .__('product') }}</h4><br>
 
-    <form action="" method="POST">
+    <form action="{{ route('products.update', $product->id) }}" method="POST">
         @csrf
-        <div class="form-group">
-            <label for="name">{{ __('name') }}</label>
-            <input type="text" name="name" id="name" class="form-control" value="">
+        @method('PUT')
+        <div class="form-group mb-3">
+            <label for="name">{{ __('product_name') }}</label>
+            <p> value="{{ $product->name }}">
             @error('name') 
-                <span class="alert-danger"> {{ $message }}</span>
+                <span class="text-danger"> {{ $message }}</span>
             @enderror
         </div>
         
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group mb-3 col-md-6">
                 <label for="price">{{ __('price') }}</label>
-                <input type="text" name="price" id="price" class="form-control" value="">
+                <input type="text" name="price" id="price" class="form-control" value="{{ $product->price}}">
                 @error('price') 
-                    <span class="alert-danger"> {{ $message }}</span>
+                    <span class="text-danger"> {{ $message }}</span>
                 @enderror
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group mb-3 col-md-6">
                 <label for="quantity">{{ __('quantity') }}</label>
-                <input type="text" name="quantity" id="quantity" class="form-control" value="">
+                <input type="text" name="quantity" id="quantity" class="form-control" value="{{ $product->quantity }}">
                 @error('quantity') 
-                    <span class="alert-danger"> {{ $message }}</span>
+                    <span class="text-danger"> {{ $message }}</span>
                 @enderror
             </div>
         </div>
         
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="">{{ __('brand') }}</label>
-            <select class="form-select">
-                <option value=""></option>
+            <select class="form-select" name="brand_id">
+                @foreach ($brands as $brand)
+                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                @endforeach
             </select>
-            @error('') 
-                <span class="alert-danger"> {{ $message }}</span>
+            @error('brand_id') 
+                <span class="text-danger"> {{ $message }}</span>
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="image">{{ __('image') }}</label>
-            <input type="file" class="form-control" id="image">
-            @error('') 
-                <span class="alert-danger"> {{ $message }}</span>
+        <div class="form-group mb-3">
+            <label for="desc" class="form-label">{{ __('desc') }}</label>
+            <textarea name="desc" id="desc" rows="4" class="form-control">{{ $product->desc }}</textarea>
+            @error('desc')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="image">{{ __('img') }}</label>
+            <div class="mb-3">
+            @foreach ($images as $image) 
+                <img src="{{ asset('images/products/' .$image->name) }}" height="120px" width="120px" class="me-2" alt="">
+            @endforeach
+            </div>
+            <input type="file" class="form-control" id="images" name="images[]" multiple value="{{ $image->name }}">
+            @error('images') 
+                <span class="text-danger"> {{ $message }}</span>
             @enderror
         </div>
 

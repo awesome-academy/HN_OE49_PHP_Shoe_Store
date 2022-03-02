@@ -47,7 +47,7 @@
             <strong>{{ __('img') }}</label>
             <div>
             @foreach ($images as $image) 
-                <img src="{{ asset('images/products/' .$image->name) }}" height="150px" width="150px" class="me-2" alt="">
+                <img src="{{ asset('images/products/' .$image->name) }}" height="200px" width="200px" class="me-2" alt="">
             @endforeach
             </div>
         </div>

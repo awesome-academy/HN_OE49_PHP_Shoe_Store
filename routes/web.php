@@ -7,6 +7,7 @@ use App\Http\Controllers\LangController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Models\Product;
 
 /*
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
         Route::resource('brands', BrandController::class);
         Route::resource('products', ProductController::class);
+        Route::resource('users', UserController::class);
     });
 });
 

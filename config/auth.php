@@ -111,5 +111,10 @@ return [
     'roles' => [
         'admin' => 1,
         'user' => 2,
-    ]
+    ],
+
+    'status' => [
+        'lock' => 0,
+        'unlock' => 1,
+    ],
 ];

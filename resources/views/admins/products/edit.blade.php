@@ -13,12 +13,12 @@
 
     <h4>{{ __('edit') ." " .__('product') }}</h4><br>
 
-    <form action="{{ route('products.update', $product->id) }}" method="POST">
+    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group mb-3">
-            <label for="name">{{ __('product_name') }}</label>
-            <p> value="{{ $product->name }}">
+            <label for="name">{{ __('product name') }}</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}">
             @error('name') 
                 <span class="text-danger"> {{ $message }}</span>
             @enderror
@@ -66,7 +66,7 @@
             <label for="image">{{ __('img') }}</label>
             <div class="mb-3">
             @foreach ($images as $image) 
-                <img src="{{ asset('images/products/' .$image->name) }}" height="120px" width="120px" class="me-2" alt="">
+                <img src="{{ asset('images/products/' . $image->name) }}" height="120px" width="120px" class="me-2" alt="">
             @endforeach
             </div>
             <input type="file" class="form-control" id="images" name="images[]" multiple value="{{ $image->name }}">

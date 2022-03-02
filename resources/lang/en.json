@@ -47,5 +47,10 @@
     "brand_name": "Brand name",
     "product_name": "Product name",
     "desc": "Description",
-    "edit brand": "Edit brand details"
+    "edit brand": "Edit brand details",
+    "user": "Users",
+    "role": "Role",
+    "status": "Status",
+    "admin status": "Unable to update admin status!",
+    "user lock": "Your account has been locked!"
 }

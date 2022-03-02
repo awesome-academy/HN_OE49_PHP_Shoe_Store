@@ -20,7 +20,7 @@
     "regisS": "Đăng ký thành công!",
     "create success": "Đã thêm thành công!",
     "delete success": "Đã xóa thành công!",
-    "submit": "Thêm mới",
+    "submit": "Lưu",
     "back": "Quay lại",
     "required": ":attr không được bỏ trống.",
     "min": ":attr  phải có tối thiểu :value kí tự.",
@@ -47,5 +47,10 @@
     "brand_name": "Thương hiệu",
     "product_name": "Tên sản phẩm",
     "desc": "Mô tả",
-    "edit brand": "Chỉnh sửa chi tiết thương hiệu"
+    "edit brand": "Chỉnh sửa chi tiết thương hiệu",
+    "user": "Tài khoản",
+    "role": "Vai trò", 
+    "status": "Trạng thái",
+    "admin status": "Không thể cập nhật trạng thái admin!",
+    "user lock": "Tài khoản của bạn đã bị khóa!"
 } 

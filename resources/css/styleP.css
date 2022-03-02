@@ -3,6 +3,10 @@
     height: 40px;
 }
 
+.nav-item.dropdown a {
+    float: left;
+}
+
 #navbarDropdown {
     float: left;
 }
@@ -52,4 +56,27 @@ tr td #desc {
 }
 form input, form textarea {
     padding: 0.5em !important;
+}
+
+i.fa-solid.fa-unlock, i.fa-solid.fa-lock {
+    padding: 6px;
+    width: 25px;
+}
+
+input[type="radio"] { 
+    display: none;
+}
+
+input[type="radio"]:checked + label {
+    border: 1px solid blue;
+    border-radius: 50%;
+
+}
+
+#form-update-user table{
+    width: 30vw;
+}
+
+#form-update-user table tr td{
+    padding: 5px;
 }

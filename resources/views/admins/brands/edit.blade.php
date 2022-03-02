@@ -27,7 +27,7 @@
             <div class="row d-print-none mt-2">
                 <div class="col-12 text-right">
                     <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>{{ __('submit') }}</button>
-                    <a class="btn btn-danger" href="{{ route('products.index') }}"><i class="fa fa-fw fa-lg fa-arrow-left"></i>{{ __('back') }}</a>
+                    <a class="btn btn-danger" href="{{ route('brands.index') }}"><i class="fa fa-fw fa-lg fa-arrow-left"></i>{{ __('back') }}</a>
                 </div>
             </div>
         </div>

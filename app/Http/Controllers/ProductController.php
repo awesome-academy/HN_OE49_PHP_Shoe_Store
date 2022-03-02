@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Image;
 use App\Models\Product;
+use App\Http\Requests\Products\StoreRequest;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -38,9 +40,30 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = [];
+        $files = $request->file('images');
+        if ($request->hasFile('images')) {
+            $product = Product::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'brand_id' => $request->brand_id,
+                'desc' => $request->desc,
+            ]);
+            foreach ($files as $key => $file) {
+                $new_name = time() .'-' . $file->getClientOriginalName();
+                $file->move(public_path('images/products/'), $new_name);
+                $data[$key] = [
+                    'product_id' => $product->id,
+                    'name' => $new_name,
+                ];
+            }
+            Image::insert($data);
+        }
+
+        return redirect()->route('products.create')->with('success', 'create success');
     }
 
     /**
@@ -51,7 +74,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findorfail($id);
+        $images = Image::where('product_id', $product->id)->get();
+
+        return view('admins.products.show')->with(compact('product', 'images'));
     }
 
     /**
@@ -62,7 +88,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('admins.products.edit');
+        $brands = Brand::all();
+        $product = Product::findorfail($id);
+        $images = Image::where('product_id', $product->id)->get();
+
+        return view('admins.products.edit')->with(compact('brands', 'product', 'images'));
     }
 
     /**

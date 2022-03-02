@@ -26,21 +26,22 @@
         </tr>
     
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        @foreach ($products as $index => $product)
+            <td>{{ ++$index }}</td>
+            <td>{{ $product->name }}</td>
+            <td>{{ $product->brand->name }}</td>
+            <td>{{ $product->price }}</td>
+            <td>{{ $product->quantity }}</td>
             <td>
-                <form action="" method="POST">
-                    <a href="" class="me-1"><i class="fa-solid fa-eye"></i> </a>
-                    <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                    <a href="{{ route('products.show', $product->id) }}" class="me-1"><i class="fa-solid fa-eye"></i> </a>
+                    <a href="{{ route('products.edit', $product->id) }}"><i class="fa-solid fa-pen-to-square"></i></a>
                     @csrf
                     @method('DELETE')
                     <button type="submit" id="btn-del" class="btn-delete" data-confirm="{{ __('delete confirm') }}"><i class="fa-solid fa-trash"></i></button>
                 </form>
             </td>
-        </tr>    
+        </tr>
+        @endforeach    
     </table>
-    <script type="text/javascript" src="{{ asset('js/delete.js') }}"></script>
 @endsection

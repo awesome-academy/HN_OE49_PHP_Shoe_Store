@@ -116,3 +116,38 @@ input[type="radio"]:checked + label {
     transform: translate(-50%, -50%);
     width: 100%;
 }
+
+.card-body.p-4 h5 {
+    -webkit-line-clamp: 2;
+    height: 45px;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+}
+
+.btn-select {
+    border-radius: 5px;
+    transition: .5s;
+}
+  
+.btn-select:hover {
+    background: #aac1f9;
+    transition: .4s;
+}
+
+ul.pagination {
+    justify-content: center;
+}
+
+ul.pagination li {
+    margin-right: 10px;
+}
+
+ul.pagination li .page-link{
+    width: 36px;
+    border-radius: 50% !important;
+}
+
+#app {
+    margin-bottom: 50px;
+}

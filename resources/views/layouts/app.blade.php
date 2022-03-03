@@ -62,8 +62,8 @@
                         @else
                             <form class="navbar-form" action="">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="{{ __('search') }}">
-                                    <button type="button" class="btn btn-secondary me-5">
+                                    <input name="name" class="form-control" placeholder="{{ __('search') }}">
+                                    <button type="submit" class="btn btn-secondary me-5">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
@@ -95,30 +95,30 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-2">
             <div class="container">
             @if (Auth::user())
                 <nav class="navbar navbar-expand-md navbar-light mb-6">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link text-uppercase h4 me-2" href="/"><i class="fa-solid fa-house-user"></i></a>
+                                <a class="nav-link text-uppercase h5 me-2" href="/"><i class="fa-solid fa-house-user"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-uppercase h4 me-2" href="{{ route('shop') }}">{{__('shop now')}}</a>
+                                <a class="btn-select nav-link text-uppercase h5 me-2" href="{{ route('shop') }}">{{__('shop now')}}</a>
                             </li>
                             <li class="nav-item dropdown me-2">
-                                <a class="nav-link dropdown-toggle h4 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn-select nav-link dropdown-toggle h5 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{__('brand')}}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @foreach ($brands as $brand)
-                                    <li><a class="dropdown-item" href="#">{{ $brand->name }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('brand', $brand->id) }}">{{ $brand->name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-uppercase h4 me-2" href="#">{{ __('about us') }}</a>
+                                <a class="btn-select nav-link text-uppercase h5 me-2" href="#">{{ __('about us') }}</a>
                             </li>
                         </ul> 
                     </div>

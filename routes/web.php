@@ -38,6 +38,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/shop', [UserProductController::class, 'index'])->name('shop');
-    Route::get('/shop/show/{id}', [UserProductController::class, 'showByRating'])->name('shop.show');
+    Route::get('/shop', [UserProductController::class, 'showByRating'])->name('shop');
+    Route::get('/shop/detail/{id}', [UserProductController::class, 'showDetails'])->name('shop.detail');
+    Route::get('brand/{id}', [UserProductController::class, 'showByBrand'])->name('brand');
 });

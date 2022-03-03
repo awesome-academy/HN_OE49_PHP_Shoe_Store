@@ -24,7 +24,7 @@
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                     </div>
-                    <h3 class="mt-4">{{ $product->price }} VND</h3>
+                    <h3 class="mt-4">{{ @money($product->price) }}</h3>
                     <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
                         <i class="fa fa-shopping-cart"></i>
                     </button>

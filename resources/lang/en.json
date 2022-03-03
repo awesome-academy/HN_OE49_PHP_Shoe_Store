@@ -61,5 +61,6 @@
     "cart": "Cart",
     "buy now": "Buy Now",
     "general info": "General Infomation",
-    "comment": "Comment"
+    "comment": "Comment",
+    "product empty": "There are currently no products under this brand."
 }

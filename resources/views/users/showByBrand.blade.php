@@ -1,14 +1,16 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('shop now') }}
+    {{ $brand->name }}
 @endsection
 
 @section('content')
+@if ($products->isEmpty())
+    <h2 class="text-center">{{ __('product empty') }}</h2>
+@endif
 <div class="container px-4 px-lg-5 mt-5">
-    <div>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach ($products as $product)
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        @foreach ($products as $product)
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
@@ -24,7 +26,7 @@
                             <h5 class="fw-bolder">{{ $product->name }}</h5>
                             <!-- Product review -->
                             <!-- Product price-->
-                            {{ $product-> price . " VND"}}
+                            {{ number_format($product->price, 0, ',', '.') . " VND"}}
                         </div>
                     </div>
                     <!-- Product actions-->
@@ -33,8 +35,7 @@
                     </div>
                 </div>
             </div>
-            @endforeach
-        </div>
+        @endforeach
     </div>
 </div>
 <div class="text-center">

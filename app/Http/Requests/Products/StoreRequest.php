@@ -25,12 +25,12 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:products',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:1000000000',
             'quantity' => 'required|numeric|min:1',
             'brand_id' => 'required',
             'desc' => 'required|max:400',
             'images' => 'required',
-            'images.*' => 'mimes:png, jpg, jpeg',
+            'images.*' => 'mimes:png,jpg,jpeg',
         ];
     }
 
@@ -42,6 +42,7 @@ class StoreRequest extends FormRequest
             'price.required' => __('required', ['attr' => __('price')]),
             'price.numeric' => __('numeric', ['attr' => __('price')]),
             'price.min' => __('min', ['attr' => __('price'), 'value' => '0']),
+            'price.max' => __('max', ['attr' => __('price'), 'value' => '10']),
             'quantity.required' => __('required', ['attr' => __('quantity')]),
             'quantity.numeric' => __('numeric', ['attr' => __('quantity')]),
             'quantity.min' => __('min', ['attr' => __('quantity'), 'value' => '0']),

@@ -62,5 +62,10 @@
     "buy now": "Buy Now",
     "general info": "General Infomation",
     "comment": "Comment",
-    "product empty": "There are currently no products under this brand."
+    "product empty": "There are currently no products under this brand.",
+    "profile": "Profile",
+    "edit profile": "Edit Profile",
+    "save changes": "Save changes",
+    "upload": "Upload file",
+    "avatar": "Profile Image"
 }

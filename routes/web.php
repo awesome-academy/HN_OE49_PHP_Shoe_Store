@@ -9,7 +9,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProductController;
-use App\Models\Product;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +41,6 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/shop', [UserProductController::class, 'showByRating'])->name('shop');
     Route::get('/shop/detail/{id}', [UserProductController::class, 'showDetails'])->name('shop.detail');
     Route::get('brand/{id}', [UserProductController::class, 'showByBrand'])->name('brand');
+    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('user.profile');
+    Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('user.profile.edit');
 });

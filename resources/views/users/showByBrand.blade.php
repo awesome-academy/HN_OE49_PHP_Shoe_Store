@@ -26,7 +26,7 @@
                             <h5 class="fw-bolder">{{ $product->name }}</h5>
                             <!-- Product review -->
                             <!-- Product price-->
-                            {{ number_format($product->price, 0, ',', '.') . " VND"}}
+                            {{ @money($product->price) }}
                         </div>
                     </div>
                     <!-- Product actions-->

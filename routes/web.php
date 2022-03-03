@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProductController;
 use App\Models\Product;
 
 /*
@@ -37,4 +38,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/shop', [UserProductController::class, 'index'])->name('shop');
+    Route::get('/shop/show/{id}', [UserProductController::class, 'showByRating'])->name('shop.show');
 });

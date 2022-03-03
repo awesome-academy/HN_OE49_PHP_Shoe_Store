@@ -52,5 +52,14 @@
     "role": "Role",
     "status": "Status",
     "admin status": "Unable to update admin status!",
-    "user lock": "Your account has been locked!"
+    "user lock": "Your account has been locked!",
+    "order": "Orders",
+    "add to cart": "Add To Cart",
+    "shop now": "Shop Now",
+    "search": "Search",
+    "about us": "About Us",
+    "cart": "Cart",
+    "buy now": "Buy Now",
+    "general info": "General Infomation",
+    "comment": "Comment"
 }

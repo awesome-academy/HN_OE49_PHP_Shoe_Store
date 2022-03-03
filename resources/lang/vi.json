@@ -52,5 +52,14 @@
     "role": "Vai trò", 
     "status": "Trạng thái",
     "admin status": "Không thể cập nhật trạng thái admin!",
-    "user lock": "Tài khoản của bạn đã bị khóa!"
+    "user lock": "Tài khoản của bạn đã bị khóa!",
+    "order": "Đặt hàng",
+    "add to cart": "Thêm vào giỏ hàng",
+    "shop now": "Shop now",
+    "search": "Tìm kiếm",
+    "about us": "Về chúng tôi",
+    "cart": "Giỏ hàng",
+    "buy now": "Mua ngay",
+    "general info": "Thông tin chung",
+    "comment": "Bình luận"
 } 

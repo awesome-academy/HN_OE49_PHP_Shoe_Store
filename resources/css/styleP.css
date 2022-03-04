@@ -151,3 +151,15 @@ ul.pagination li .page-link{
 #app {
     margin-bottom: 50px;
 }
+
+.img-show {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.img-icon {
+    border-radius: 50%;
+    object-fit: cover;
+}

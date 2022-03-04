@@ -67,5 +67,6 @@
     "edit profile": "Edit Profile",
     "save changes": "Save changes",
     "upload": "Upload file",
-    "avatar": "Profile Image"
+    "avatar": "Avatar",
+    "max_avt": "The avatar must not be greater than 2MB."
 }

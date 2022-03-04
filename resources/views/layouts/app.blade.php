@@ -13,6 +13,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -69,7 +70,13 @@
                                 </div>
                             </form>
                             <li class="nav-item dropdown">
-                                <img src="{{ asset('images/user-icon.png') }}" alt="avatar" height="40px">
+                                <img class="img-icon" id="avt" width="40px" src="
+                                    @if (Auth::user()->avatar == null)
+                                        {{ asset('images/user-icon.png') }}
+                                    @else
+                                        {{ asset('images/profile/' . Auth::user()->avatar) }} 
+                                    @endif"
+                                alt="">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
@@ -137,5 +144,6 @@
             </div>
         </main>
     </div>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@if ($mess = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ __($mess) }}</p>
+    </div>
+@endif
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row">
@@ -9,8 +14,16 @@
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header h5">{{ __('avatar') }}</div>
                 <div class="card-body text-center">
-                    <img class="img-account-profile rounded-circle mb-2" src="" alt="" height="100px">
-                    <a href="{{ route('user.profile.edit', $user->id) }}" class="btn btn-outline-dark">{{ __('edit profile') }}</a>
+                    <div class="d-flex flex-column align-items-center text-center py-2">
+                        <img class="img-show" id="avt" src="
+                            @if ($user->avatar == null)
+                                {{ asset('images/user-icon.png') }}
+                            @else
+                                {{ asset('images/profile/' . $user->avatar) }} 
+                            @endif"
+                        alt="">
+                    </div>
+                    <a href="{{ route('user.profile.edit', $user->id) }}" class="btn btn-outline-dark mt-2">{{ __('edit profile') }}</a>
                 </div>
             </div>
         </div>

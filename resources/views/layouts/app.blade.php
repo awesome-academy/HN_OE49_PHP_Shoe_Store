@@ -133,9 +133,11 @@
 
                     <form class="text-right">
                         <button class="btn btn-outline-dark" type="submit">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            {{ __('cart') }}
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <a id="cart" href="{{ route('cart') }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                {{ __('cart') }}
+                            </a>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ $cart->total_quantity }}</span>
                         </button>
                     </form>
                 </nav>

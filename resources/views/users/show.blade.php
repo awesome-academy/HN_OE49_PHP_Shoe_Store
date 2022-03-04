@@ -26,7 +26,7 @@
                     </div>
                     <h3 class="mt-4">{{ @money($product->price) }}</h3>
                     <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <i class="fa fa-shopping-cart"></i>
+                        <a href="{{ route('cart.add', $product->id) }}"><i class="fa fa-shopping-cart"></i></a>
                     </button>
                     <button class="btn btn-danger btn-rounded">{{ __('buy now') }}</button>
                 </div>

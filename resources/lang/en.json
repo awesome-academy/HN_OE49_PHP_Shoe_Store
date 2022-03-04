@@ -68,5 +68,9 @@
     "save changes": "Save changes",
     "upload": "Upload file",
     "avatar": "Avatar",
-    "max_avt": "The avatar must not be greater than 2MB."
+    "max_avt": "The avatar must not be greater than 2MB.",
+    "your cart": "Your cart",
+    "total price": "Total price",
+    "total": "Total",
+    "place order": "Place order"
 }

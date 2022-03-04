@@ -29,7 +29,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">{{ __('add to cart') }}</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ route('cart.add', $product->id) }}">{{ __('add to cart') }}</a></div>
                     </div>
                 </div>
             </div>

@@ -67,5 +67,6 @@
     "edit profile": "Chỉnh sửa trang cá nhân",
     "save changes": "Lưu thay đổi",
     "upload": "Tải lên tệp",
-    "avatar": "Ảnh đại diện"
+    "avatar": "Ảnh đại diện",
+    "max_avt": "Ảnh đại diện không được lớn hơn 2MB"
 } 

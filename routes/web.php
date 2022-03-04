@@ -39,8 +39,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/shop', [UserProductController::class, 'showByRating'])->name('shop');
-    Route::get('/shop/detail/{id}', [UserProductController::class, 'showDetails'])->name('shop.detail');
+    Route::get('/shop/{id}/detail', [UserProductController::class, 'showDetails'])->name('shop.detail');
     Route::get('brand/{id}', [UserProductController::class, 'showByBrand'])->name('brand');
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('user.profile');
-    Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('user.profile.update');
 });

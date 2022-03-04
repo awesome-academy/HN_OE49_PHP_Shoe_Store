@@ -9,6 +9,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -44,4 +45,11 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('user.profile');
     Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('user.profile.edit');
     Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('user.profile.update');
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('cart');
+        Route::get('add/{id}', [CartController::class, 'add'])->name('cart.add');
+        Route::get('remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+        Route::get('update/{id}', [CartController::class, 'update'])->name('cart.update');
+        Route::get('clear', [CartController::class, 'clear'])->name('cart.clear');
+    });
 });

@@ -15,7 +15,7 @@
     <!-- CSS Files -->
     {{-- <link id="pagestyle" href="{{asset('css/app.css')}}" rel="stylesheet" /> --}}
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/styleP.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 

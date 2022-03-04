@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use App\Helper\CartHelper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('partials.language_switcher', function ($view) {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
+        });
+
+        view()->composer('*', function ($view) {
+            $view->with([
+                'cart' => new CartHelper(),
+            ]);
         });
 
         Blade::directive('money', function ($price) {

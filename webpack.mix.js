@@ -16,5 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/delete.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .postCss('resources/css/style.css', 'public/css')
-    .postCss('resources/css/styleP.css', 'public/css')
+    .postCss('resources/css/main.css', 'public/css')
     .sourceMaps();

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ __('profile') }}
+@endsection
+
 @section('content')
 @if ($mess = Session::get('success'))
     <div class="alert alert-success">

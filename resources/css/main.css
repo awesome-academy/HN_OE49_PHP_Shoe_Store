@@ -227,3 +227,22 @@ button:hover a#cart {
 .w-18 {
     width: 18% !important;
 }
+
+.avt-cmt {
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    top: 0;
+    left: 100%;
+    transform: translate(-100%, -0%);
+}
+
+.avt-cmt img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+}

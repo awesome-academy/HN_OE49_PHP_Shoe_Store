@@ -21,6 +21,7 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/rateyo/min/jquery.rateyo.min.css') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -147,5 +148,7 @@
         </main>
     </div>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script type="text/javascript" src=" {{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src=" {{ asset('bower_components/rateyo/min/jquery.rateyo.min.js') }}"></script>
 </body>
 </html>

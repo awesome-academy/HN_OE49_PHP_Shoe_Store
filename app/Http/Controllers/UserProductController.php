@@ -6,7 +6,9 @@ use App\Models\Brand;
 use App\Models\Comment;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserProductController extends Controller
@@ -32,8 +34,20 @@ class UserProductController extends Controller
         $product = Product::findorfail($id);
         $brands = Brand::all();
         $images = Image::where('product_id', $product->id)->get();
+        $allowComment = false;
 
-        return view('users.show')->with(compact('product', 'images', 'brands'));
+        $user = User::with(['orders' => function ($query) {
+            $query->where('order_status_id', config('orderstatus.delivered'));
+        }])->where('id', Auth::user()->id)->first();
+        
+        foreach ($user->orders as $order) {
+            foreach ($order->products as $p) {
+                if ($p->id == $id) {
+                    $allowComment = true;
+                }
+            }
+        }
+        return view('users.show')->with(compact('product', 'images', 'brands', 'allowComment'));
     }
 
     public function showByBrand(Request $request, $id)

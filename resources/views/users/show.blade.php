@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ __('product detail') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6 me-4">
-                    <div class="pro-img-details mb-2">
+                <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
+                    <div class="pro-img-details me-3">
                         <img class="card-image-style" src="{{ asset('images/products/' . $product->images->first()->name) }}">
                     </div>
                     <div class="pro-img-list text-center">
@@ -18,11 +22,20 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <h1 class="box-title mt-5 fw-bold">{{ $product->name }}</h1>
                     <div>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        @php $rating = $product->getAvgRatingAttribute(); @endphp
+                        @foreach (range(1, config('rating.max_rating')) as $i)
+                            @if ($rating > config('rating.min_rating'))
+                                @if ($rating > config('rating.half_rating'))
+                                    <span class="fa-solid fa-star checked"></span>
+                                @else
+                                    <span class="fa-solid fa-star-half-stroke checked"></span>
+                                @endif
+                            @else
+                                <span class="fa-regular fa-star checked"></span>
+                            @endif
+                            @php $rating--; @endphp
+                        @endforeach
+                        {{ number_format($product->getAvgRatingAttribute(), 1, '.', '') }}
                     </div>
                     <h3 class="mt-4">{{ @money($product->price) }}</h3>
                     <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">

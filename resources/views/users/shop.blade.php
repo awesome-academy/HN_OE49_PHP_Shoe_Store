@@ -11,7 +11,7 @@
             @foreach ($products as $product)
             <div class="col mb-5">
                 <div class="card h-100">
-                    <!-- Product image-->
+                    <!-- product image-->
                     <div class="card-image">
                         <a href="{{ route('shop.detail', $product->id) }}">
                             <img class="card-img-top" src="{{ asset('images/products/' . $product->images->first()->name) }}">
@@ -23,8 +23,22 @@
                             <!-- Product name-->
                             <h5 class="fw-bolder">{{ $product->name }}</h5>
                             <!-- Product review -->
+                            @php $rating = $product->rating; @endphp
+                            @foreach (range(1, config('rating.max_rating')) as $i)
+                                @if ($rating > config('rating.min_rating'))
+                                    @if ($rating > config('rating.half_rating'))
+                                        <span class="fa-solid fa-star checked"></span>
+                                    @else
+                                        <span class="fa-solid fa-star-half-stroke checked"></span>
+                                    @endif
+                                @else
+                                    <span class="fa-regular fa-star checked"></span>
+                                @endif
+                                @php $rating--; @endphp
+                            @endforeach
+                            {{ number_format($product->rating, 1, '.', '') }}
                             <!-- Product price-->
-                            {{ @money($product-> price) }}
+                            <p class="mt-3 fs-5">{{ @money($product->price) }}</p>
                         </div>
                     </div>
                     <!-- Product actions-->

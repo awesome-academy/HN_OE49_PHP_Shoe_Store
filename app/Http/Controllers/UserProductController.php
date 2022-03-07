@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Comment;
 use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserProductController extends Controller
 {
     public function showByRating(Request $request)
     {
-        $products = Product::query();
+        $products = Product::with('comments')
+                        ->join('comments', 'products.id', '=', 'comments.product_id')
+                        ->select('products.*', DB::raw('avg(comments.rating) as rating'))
+                        ->groupBy('products.id')
+                        ->orderBy('rating', 'desc');
         if ($request->name) {
             $products = $products->where('name', 'like', '%' . $request->name . '%');
         }

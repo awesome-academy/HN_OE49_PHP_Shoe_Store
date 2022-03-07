@@ -23,19 +23,8 @@
                     <h1 class="box-title mt-5 fw-bold">{{ $product->name }}</h1>
                     <div>
                         @php $rating = $product->getAvgRatingAttribute(); @endphp
-                        @foreach (range(1, config('rating.max_rating')) as $i)
-                            @if ($rating > config('rating.min_rating'))
-                                @if ($rating > config('rating.half_rating'))
-                                    <span class="fa-solid fa-star checked"></span>
-                                @else
-                                    <span class="fa-solid fa-star-half-stroke checked"></span>
-                                @endif
-                            @else
-                                <span class="fa-regular fa-star checked"></span>
-                            @endif
-                            @php $rating--; @endphp
-                        @endforeach
-                        {{ number_format($product->getAvgRatingAttribute(), 1, '.', '') }}
+                        <input type="hidden" id="prd-rate" value="{{ $rating }}">
+                        <div id="rateYoP"></div>
                     </div>
                     <h3 class="mt-4">{{ @money($product->price) }}</h3>
                     <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
@@ -61,7 +50,84 @@
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h3 class="box-title mt-5">{{ __('comment') }}</h3>
+                    @php
+                        $count = 0;
+                        foreach($product->comments as $comment) {
+                            $count++;
+                        }
+                    @endphp
+                    <h3 class="box-title mt-5">{{ __('comment') }} ({{ $count }})</h3>
+                    <hr>
+                    @foreach ($product->comments as $comment)
+                        <div class="row">
+                            <div class="col-1">
+                                <div class="avt-cmt">
+                                    @if ($comment->user->avatar == null)
+                                        <img src="{{ asset('images/user-icon.png') }}" alt="">
+                                    @else
+                                        <img src="{{ asset('images/profile/' . $comment->user->avatar) }}" alt="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <h5 class="media-heading">{{ $comment->user->name }}
+                                    @php $rating = $comment->rating; @endphp
+                                    @foreach (range(1, config('rating.max_rating')) as $i)
+                                        @if ($rating > config('rating.min_rating'))
+                                            @if ($rating > config('rating.half_rating'))
+                                                <small class="fa-solid fa-star checked"></small>
+                                            @else
+                                                <small class="fa-solid fa-star-half-stroke checked"></small>
+                                            @endif
+                                        @else
+                                            <small class="fa-regular fa-star checked"></small>
+                                        @endif
+                                        @php $rating--; @endphp
+                                    @endforeach
+                                </h5>
+                                <p>{{ $comment->content }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                    
+                    @if ($allowComment)
+                        <div class="row">
+                            <div class="col-1">
+                                <div class="avt-cmt">
+                                    @if (Auth::user()->avatar == null)
+                                        <img src="{{ asset('images/user-icon.png') }}" alt="">
+                                    @else
+                                        <img src="{{ asset('images/profile/' . Auth::user()->avatar) }}" alt="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <h5 class="media-heading">{{ Auth::user()->name }}</h5>
+                                <form action="{{ route('comment', $product->id) }}" id="form-comment" method="POST" role="form">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    <input type="hidden" name="rating" id="rating" value="" />
+                                    <div id="rateYo"></div>
+                                    <div class="mb-3 mt-1">
+                                        <textarea class="form-control" name="content" id="comment-content" placeholder="{{ __('enter comment') }}" rows="3"></textarea>
+                                        @error('content')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        @if (Session::has('message'))
+                                            <div class="text-success">
+                                                <div class="text-white">{{ Session::has('message') }}</div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="submit" id="btn-comment" class="btn btn-primary" value="Send comment">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

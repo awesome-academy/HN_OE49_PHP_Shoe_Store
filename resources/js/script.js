@@ -7,6 +7,22 @@ $(document).ready(function(){
         event.preventDefault();
         $('#logout-form').submit();
     })
+
+    $(function () {
+        $("#rateYo").rateYo({
+            rating: 0,
+            starWidth: "15px",
+        }).on('rateyo.set', function (e, data) {
+            $('#rating').val(data.rating)
+        });
+    });
+
+    $(function () {
+        $("#rateYoP").rateYo({
+            rating: $('#prd-rate').val(),
+            readOnly: true
+        })
+    })    
 });
 
 $(document).ready(function() {

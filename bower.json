@@ -1,0 +1,20 @@
+{
+  "name": "HN_OE49_PHP_Shoe_Store",
+  "description": "",
+  "main": "",
+  "authors": [
+    "aries <hathanhhoang842000@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ariesh2t/HN_OE49_PHP_Shoe_Store",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "rateyo": "^2.3.4"
+  }
+}

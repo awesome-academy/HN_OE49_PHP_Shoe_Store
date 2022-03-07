@@ -17,3 +17,4 @@ yarn-error.log
 /public/js
 /public/images/products
 /public/images/profile
+/public/bower_components

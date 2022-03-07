@@ -17,6 +17,10 @@ class Product extends Model
         'desc',
     ];
 
+    protected $appends = [
+        'avg_rating',
+    ];
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);
@@ -35,5 +39,10 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getAvgRatingAttribute()
+    {
+        return $this->comments()->avg('rating');
     }
 }

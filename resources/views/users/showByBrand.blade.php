@@ -25,8 +25,22 @@
                             <!-- Product name-->
                             <h5 class="fw-bolder">{{ $product->name }}</h5>
                             <!-- Product review -->
+                            @php $rating = $product->getAvgRatingAttribute(); @endphp
+                            @foreach (range(1, config('rating.max_rating')) as $i)
+                                @if ($rating > config('rating.min_rating'))
+                                    @if ($rating > config('rating.half_rating'))
+                                        <span class="fa-solid fa-star checked"></span>
+                                    @else
+                                        <span class="fa-solid fa-star-half-stroke checked"></span>
+                                    @endif
+                                @else
+                                    <span class="fa-regular fa-star checked"></span>
+                                @endif
+                                @php $rating--; @endphp
+                            @endforeach
+                            {{ number_format($product->getAvgRatingAttribute(), 1, '.', '') }}
                             <!-- Product price-->
-                            {{ @money($product->price) }}
+                            <p class="mt-3 fs-5">{{ @money($product->price) }}</p>
                         </div>
                     </div>
                     <!-- Product actions-->

@@ -117,12 +117,12 @@
                                         @enderror
                                         @if (Session::has('message'))
                                             <div class="text-success">
-                                                <div class="text-white">{{ Session::has('message') }}</div>
+                                                {{ Session::get('message') }}
                                             </div>
                                         @endif
                                     </div>
                                     <div class="mb-3">
-                                        <input type="submit" id="btn-comment" class="btn btn-primary" value="Send comment">
+                                        <input type="submit" id="btn-comment" class="btn btn-primary" value="{{ __('post comment') }}">
                                     </div>
                                 </form>
                             </div>

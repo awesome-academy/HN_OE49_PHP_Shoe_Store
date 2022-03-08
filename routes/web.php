@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -52,4 +53,5 @@ Route::middleware(['auth', 'user'])->group(function () {
         Route::get('update/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::get('clear', [CartController::class, 'clear'])->name('cart.clear');
     });
+    Route::post('/comment/{product_id}', [CommentController::class, 'comment'])->name('comment');
 });

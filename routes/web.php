@@ -12,6 +12,7 @@ use App\Http\Controllers\UserProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +55,6 @@ Route::middleware(['auth', 'user'])->group(function () {
         Route::get('clear', [CartController::class, 'clear'])->name('cart.clear');
     });
     Route::post('/comment/{product_id}', [CommentController::class, 'comment'])->name('comment');
+    Route::get('/cart/checkout', [OrderController::class, 'infoOrder'])->name('checkout');
+    Route::post('/placeorder', [OrderController::class, 'postOrder'])->name('placeorder');
 });

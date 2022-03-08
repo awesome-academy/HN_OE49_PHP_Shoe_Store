@@ -72,8 +72,15 @@
     "your cart": "Giỏ hàng của bạn",
     "total price": "Thành tiền",
     "total": "Tổng giá trị",
-    "place order": "Đến trang thanh toán",
+    "place order": "Thanh Toán",
     "product detail": "Chi tiết sản phẩm",
     "enter comment": "Nhập bình luận của bạn",
-    "post comment": "Gửi bình luận"
+    "post comment": "Gửi bình luận",
+    "delivery address": "Địa chỉ nhận hàng",
+    "payment": "Phương thức thanh toán",
+    "cash": "Thanh toán khi nhận hàng",
+    "shipping total": "Phí vận chuyển",
+    "checkout": "Đến trang thanh toán",
+    "thanks order": "Đặt hàng thành công! Cảm ơn bạn đã đặt hàng!",
+    "empty_cart": "Giỏ hàng của bạn đang trống!"
 } 

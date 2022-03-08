@@ -72,8 +72,15 @@
     "your cart": "Your cart",
     "total price": "Total price",
     "total": "Total",
-    "place order": "Place order",
+    "place order": "Place Order",
     "product detail": "Product Detail",
     "enter comment": "Enter your comment",
-    "post comment": "Post"
+    "post comment": "Post",
+    "delivery address": "Delivery Address",
+    "payment": "Payment Method",
+    "cash": "Cash on Delivery",
+    "shipping total": "Shipping Total",
+    "checkout": "Check Out",
+    "thanks order": "Order Successful! Thanks for your order!",
+    "empty_cart": "Your cart is empty!"
 }

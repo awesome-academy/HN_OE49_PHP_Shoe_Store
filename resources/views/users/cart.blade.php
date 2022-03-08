@@ -57,8 +57,8 @@
             
             <tr>
                 <td class="text-end" colspan="6">
-                    <a class="btn btn-warning" href="">
-                        {{ __('place order') }}
+                    <a class="btn btn-warning" href="{{ route('checkout') }}">
+                        {{ __('checkout') }}
                         <i class="fa-solid fa-angles-right"></i>
                     </a>
                 </td>

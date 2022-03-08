@@ -143,6 +143,17 @@
                     </form>
                 </nav>
             @endif
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible" id="flash">
+                    {{ $message }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            @elseif ($message = Session::get('error'))
+                <div class="alert alert-danger alert-dismissible" id="flash">
+                    {{ $message }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            @endif
             @yield('content')
             </div>
         </main>

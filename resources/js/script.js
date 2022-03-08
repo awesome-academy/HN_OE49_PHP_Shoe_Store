@@ -22,7 +22,11 @@ $(document).ready(function(){
             rating: $('#prd-rate').val(),
             readOnly: true
         })
-    })    
+    })
+
+    $(".close").click(function(){
+        $("#flash").alert("close");
+    });   
 });
 
 $(document).ready(function() {

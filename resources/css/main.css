@@ -246,3 +246,39 @@ button:hover a#cart {
     transform: translate(-50%, -50%);
     width: 50px;
 }
+
+._1G9Cv7 {
+    height: 3px;
+    width: 100%;
+    background-position-x: -30px;
+    background-size: 116px 3px;
+    background-image: repeating-linear-gradient(
+        45deg,#6fa6d6,#6fa6d6 33px,
+        transparent 0,transparent 41px,#f18d9b 0,
+        #f18d9b 74px,transparent 0,transparent 82px);
+}
+
+.title-check {
+    color: #b54f13;
+}
+
+.line-space {
+    border-top: 1px dashed rgba(0,0,0,.09);
+}
+
+.total-check {
+    font-weight: 600;
+    color: red;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+    text-decoration: none;
+}

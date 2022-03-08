@@ -132,15 +132,13 @@
                         </ul> 
                     </div>
 
-                    <form class="text-right">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <a id="cart" href="{{ route('cart') }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                {{ __('cart') }}
-                            </a>
+                    <div class="text-right">
+                        <a id="cart" href="{{ route('cart') }}" class="btn btn-outline-dark">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            {{ __('cart') }}
                             <span class="badge bg-dark text-white ms-1 rounded-pill">{{ $cart->total_quantity }}</span>
-                        </button>
-                    </form>
+                        </a>
+                    </div>
                 </nav>
             @endif
             @if ($message = Session::get('success'))

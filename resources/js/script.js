@@ -26,7 +26,11 @@ $(document).ready(function(){
 
     $(".close").click(function(){
         $("#flash").alert("close");
-    });   
+    });
+
+    $('#update-order-status').click(function() {
+        return confirm($('#update-order-status').attr("data-cf"));
+    })
 });
 
 $(document).ready(function() {

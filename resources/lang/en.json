@@ -82,5 +82,12 @@
     "shipping total": "Shipping Total",
     "checkout": "Check Out",
     "thanks order": "Order Successful! Thanks for your order!",
-    "empty_cart": "Your cart is empty!"
+    "empty_cart": "Your cart is empty!",
+    "order detail": "Order details",
+    "update order": "Update order status",
+    "update order success": "Updated order status :value",
+    "exist": "The data is not in the database.",
+    "number product": "Number of products",
+    "error update status": "Completed or canceled orders cannot be updated.",
+    "sure update": "Are you sure you want to change this order status?"
 }

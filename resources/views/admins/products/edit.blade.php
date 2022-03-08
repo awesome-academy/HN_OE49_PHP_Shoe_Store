@@ -17,7 +17,7 @@
         @csrf
         @method('PUT')
         <div class="form-group mb-3">
-            <label for="name">{{ __('product name') }}</label>
+            <label for="name">{{ __('product_name') }}</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}">
             @error('name') 
                 <span class="text-danger"> {{ $message }}</span>

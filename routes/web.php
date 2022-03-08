@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::resource('brands', BrandController::class);
         Route::resource('products', ProductController::class);
         Route::resource('users', UserController::class);
+        Route::resource('orders', AdminOrderController::class);
     });
 });
 

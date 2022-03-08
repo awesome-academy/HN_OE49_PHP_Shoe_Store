@@ -64,7 +64,7 @@ class ProductController extends Controller
             Image::insert($data);
         }
 
-        return redirect()->route('products.create')->with('success', 'create success');
+        return redirect()->route('products.create')->with('message', __('create success'));
     }
 
     /**
@@ -137,7 +137,7 @@ class ProductController extends Controller
             Image::insert($data);
         }
 
-        return redirect()->route('products.index')->with('success', 'update success');
+        return redirect()->route('products.index')->with('message', __('update success'));
     }
 
     /**
@@ -158,6 +158,6 @@ class ProductController extends Controller
         }
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', "delete success");
+        return redirect()->route('products.index')->with('message', __('delete success'));
     }
 }

@@ -107,16 +107,6 @@ class ProductController extends Controller
     {
         $product = Product::findorfail($id);
         $upload_path = public_path('images/products/');
-        $images = Image::where('product_id', $product->id)->get();
-        if ($request->hasFile('images')) {
-            foreach ($images as $image) {
-                if (File::exists($upload_path . $image->name)) {
-                    File::delete($upload_path . $image->name);
-                }
-            }
-            Image::where('product_id', $product->id)->delete();
-        }
-        $data = [];
         $product->update([
             'name' => $request->name,
             'price' => $request->price,
@@ -124,19 +114,20 @@ class ProductController extends Controller
             'brand_id' => $request->brand_id,
             'desc' => $request->desc,
         ]);
-        $files = $request->file('images');
-        if ($files) {
-            foreach ($files as $key => $file) {
-                $new_name = time() . '-' . $file->getClientOriginalName();
-                $file->move($upload_path, $new_name);
-                $data[$key] = [
-                    'product_id' => $product->id,
-                    'name' => $new_name,
-                ];
+        if ($request->hasFile('images')) {
+            $data = [];
+            if ($files = $request->file('images')) {
+                foreach ($files as $key => $file) {
+                    $new_name = time() . '-' . $file->getClientOriginalName();
+                    $file->move($upload_path, $new_name);
+                    $data[$key] = [
+                        'product_id' => $product->id,
+                        'name' => $new_name,
+                    ];
+                }
+                Image::insert($data);
             }
-            Image::insert($data);
         }
-
         return redirect()->route('products.index')->with('message', __('update success'));
     }
 
@@ -159,5 +150,17 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index')->with('message', __('delete success'));
+    }
+
+    public function deleteImage($id)
+    {
+        $images = Image::findOrFail($id);
+        $upload_path = 'images/products/';
+        if (File::exists($upload_path . $images->name)) {
+            File::delete($upload_path . $images->name);
+        }
+        $images->delete();
+
+        return back();
     }
 }

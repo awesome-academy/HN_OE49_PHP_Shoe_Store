@@ -64,12 +64,7 @@
 
         <div class="form-group mb-3">
             <label for="image">{{ __('img') }}</label>
-            <div class="mb-3">
-            @foreach ($images as $image) 
-                <img src="{{ asset('images/products/' . $image->name) }}" height="120px" width="120px" class="me-2" alt="">
-            @endforeach
-            </div>
-            <input type="file" class="form-control" id="images" name="images[]" multiple value="{{ $image->name }}">
+            <input type="file" class="form-control" id="images" name="images[]" multiple value="">
             @error('images') 
                 <span class="text-danger"> {{ $message }}</span>
             @enderror
@@ -84,4 +79,13 @@
             </div>
         </div>
     </form>
+    <div class="mb-3">
+        @foreach ($product->images as $image)
+            <form action="{{ route('delete.image', $image->id) }}" method="post">
+            <button class="btn text-danger">x</button>
+        @csrf
+        @method('DELETE')
+            <img src="{{ asset('images/products/' . $image->name) }}" height="120px" width="120px" class="me-2" alt="">
+        @endforeach
+    </div>
 @endsection

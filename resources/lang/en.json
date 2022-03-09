@@ -89,5 +89,7 @@
     "exist": "The data is not in the database.",
     "number product": "Number of products",
     "error update status": "Completed or canceled orders cannot be updated.",
-    "sure update": "Are you sure you want to change this order status?"
+    "sure update": "Are you sure you want to change this order status?",
+    "history": "Orders History",
+    "not enough": ":attr shoes are now only :qtt pairs"
 }

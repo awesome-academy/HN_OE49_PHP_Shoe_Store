@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string',
             'price' => 'required|numeric|min:0|max:1000000000',
             'quantity' => 'required|numeric|min:1',
-            'brand_id' => 'required',
+            'brand_id' => 'required|exists:brands,id',
             'desc' => 'required|max:400',
             'images.*' => 'mimes:png,jpg,jpeg',
         ];
@@ -48,6 +48,7 @@ class UpdateRequest extends FormRequest
             'desc.required' => __('required', ['attr' => __('desc')]),
             'desc.max' => __('max', ['attr' => __('desc'), 'value' => '400']),
             'brand_id.required' => __('required', ['attr' => __('brand')]),
+            'brand_id.exists' => __('exist'),
             'images.*.mimes' => __('mimes', ['attr' => __('img')]),
         ];
     }

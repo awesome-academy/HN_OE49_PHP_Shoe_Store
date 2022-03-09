@@ -38,6 +38,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::resource('products', ProductController::class);
         Route::resource('users', UserController::class);
         Route::resource('orders', AdminOrderController::class);
+        Route::delete('products/image/{id}', [ProductController::class, 'deleteImage'])->name('delete.image');
     });
 });
 
@@ -59,4 +60,6 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::post('/comment/{product_id}', [CommentController::class, 'comment'])->name('comment');
     Route::get('/cart/checkout', [OrderController::class, 'infoOrder'])->name('checkout');
     Route::post('/placeorder', [OrderController::class, 'postOrder'])->name('placeorder');
+    Route::get('/history', [OrderController::class, 'historyOrder'])->name('user.history');
+    Route::get('/history/{id}/detail', [OrderController::class, 'showOrderDetail'])->name('user.history.detail');
 });

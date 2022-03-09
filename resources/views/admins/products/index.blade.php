@@ -40,4 +40,5 @@
             </tr>
         @endforeach    
     </table>
+    {!! $products->appends(request()->all())->links() !!}
 @endsection

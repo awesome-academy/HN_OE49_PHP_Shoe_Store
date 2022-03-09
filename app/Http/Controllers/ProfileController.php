@@ -48,6 +48,6 @@ class ProfileController extends Controller
             'avatar' => $filename ?? Auth::user()->avatar, //neu ko update anh moi, update anh cu
         ]);
 
-        return redirect()->route('user.profile', $id)->with('success', 'update success');
+        return redirect()->route('user.profile', $id)->with('success', __('update success'));
     }
 }

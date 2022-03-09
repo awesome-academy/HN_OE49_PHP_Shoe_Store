@@ -12,8 +12,9 @@ class CartController extends Controller
     public function index()
     {
         $brands = Brand::all();
+        $product = new Product();
 
-        return view('users.cart', compact('brands'));
+        return view('users.cart', compact('brands', 'product'));
     }
 
     public function add(CartHelper $cart, $id)

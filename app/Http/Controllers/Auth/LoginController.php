@@ -62,12 +62,16 @@ class LoginController extends Controller
                     ->route('admin')
                     ->with('noti', __('welcome'));
             } else {
-                return redirect()->route('home');
+                if (Auth::user()->status == config('auth.status.unlock')) {
+                    return redirect()->route('home');
+                } else {
+                    Auth::logout();
+
+                    return redirect()->route('login')->with('error', __('user lock'));
+                }
             }
         } else {
-            return redirect()
-                ->route('login')
-                ->with('error', __('login-fail'));
+            return redirect()->route('login')->with('error', __('login-fail'));
         }
     }
 }

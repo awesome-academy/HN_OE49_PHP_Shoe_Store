@@ -91,5 +91,6 @@
     "error update status": "Completed or canceled orders cannot be updated.",
     "sure update": "Are you sure you want to change this order status?",
     "history": "Orders History",
-    "not enough": ":attr shoes are now only :qtt pairs"
+    "not enough": ":attr shoes are now only :qtt pairs",
+    "numeric": "The :attr must be a number."
 }

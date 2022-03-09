@@ -5,11 +5,6 @@
 @endsection
 
 @section('content')
-@if ($mess = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ __($mess) }}</p>
-    </div>
-@endif
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row">

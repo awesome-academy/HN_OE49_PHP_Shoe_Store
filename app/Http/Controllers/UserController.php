@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::orderby('name', 'ASC')->paginate(config('paginate.pagination'));
 
         return view('admins.users.index', compact('users'));
     }
@@ -76,9 +76,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if ($user->role_id == config('auth.roles.admin')) {
-            return redirect()->route('users.index')->with('error', __('user lock'));
-        }
         $user->update($request->only('status'));
 
         return redirect()->route('users.index')->with('message', __('update success'));

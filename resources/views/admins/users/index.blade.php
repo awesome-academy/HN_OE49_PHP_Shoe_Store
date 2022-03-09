@@ -44,4 +44,5 @@
         @endforeach
     </tbody>
 </table>
+{!! $users->appends(request()->all())->links() !!}
 @endsection

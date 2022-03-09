@@ -22,18 +22,12 @@
     </thead>
     <tbody>
         @foreach ($orders as $order)
-            @php
-                $numOfProduct = 0;
-                foreach ($order->products as $product) {
-                    $numOfProduct++;
-                }
-            @endphp
             <tr>
                 <td class="text-center">{{ $order->id }}</td>
                 <td>{{ $order->user->name }}</td>
                 <td>{{ $order->user->phone }}</td>
-                <td class="text-center">{{ $numOfProduct }}</td>
-                <td class="text-center">{{ $order->total_price }}</td>
+                <td class="text-center">{{ $order->products->count() }}</td>
+                <td class="text-center">{{ @money($order->total_price) }}</td>
                 <td class="text-center">
                     <span class="badge bg-gradient-faded-danger">{{ $order->orderStatus->name }}</span>
                 </td>
@@ -49,4 +43,5 @@
         @endforeach
     </tbody>
 </table>
+{!! $orders->appends(request()->all())->links() !!}
 @endsection

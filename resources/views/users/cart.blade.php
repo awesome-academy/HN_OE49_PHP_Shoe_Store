@@ -34,7 +34,7 @@
                     <td>
                         <form id="update-price" class="row g-3" action="{{ route('cart.update', $item['id']) }}">
                             <div class="col-5">
-                                <input type="number" name="quantity" class="form-control" min="1" max="25" value="{{ $item['quantity'] }}">
+                                <input type="number" name="quantity" class="form-control" min="1" max="{{ $product->find($item['id'])['quantity'] }}" value="{{ $item['quantity'] }}">
                             </div>
                             <div class="col-7">
                                 <button id="update" type="submit" class="btn btn-primary"> {{ __('update') }}</button>

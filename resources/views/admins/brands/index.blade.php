@@ -44,4 +44,5 @@
         @endforeach
     </tbody>
 </table>
+{!! $brands->appends(request()->all())->links() !!}
 @endsection

@@ -29,10 +29,24 @@ class UserProductController extends Controller
         return view('users.shop')->with(compact('products', 'brands'));
     }
 
+    public function getAll(Request $request)
+    {
+        $products = Product::orderBy('name', 'desc');
+        if ($request->name) {
+            $products = $products->where('name', 'like', '%' . $request->name . '%');
+        }
+        $products = $products->paginate(config('paginate.pagination'));
+        $brands = Brand::all();
+
+        return view('users.all')->with(compact('products', 'brands'));
+    }
+
     public function showDetails($id)
     {
         $product = Product::findorfail($id);
         $brands = Brand::all();
+        $comments = Comment::all();
+        // dd($comments);
         $images = Image::where('product_id', $product->id)->get();
         $allowComment = false;
 
@@ -44,6 +58,12 @@ class UserProductController extends Controller
             foreach ($order->products as $p) {
                 if ($p->id == $id) {
                     $allowComment = true;
+                    foreach ($comments as $comment) {
+                        if ($comment['product_id'] == $id && $comment['user_id'] == Auth::user()->id) {
+                            $allowComment = false;
+                            break;
+                        }
+                    }
                 }
             }
         }

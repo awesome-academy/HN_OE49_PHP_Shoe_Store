@@ -92,5 +92,8 @@
     "sure update": "Bạn có chắc chắn muốn thay đổi trạng thái đơn đặt hàng này không?",
     "history": "Lịch sử mua hàng",
     "not enough": "Giày :attr hiện chỉ còn :qtt đôi",
-    "numeric": "Trường :attribute phải là một số."
+    "numeric": "Trường :attribute phải là một số.",
+    "rating success": "Đã gửi bình luận.",
+    "comment fail": "Cập nhật thất bại. :attr không được để trống",
+    "content": "Nội dung"
 } 

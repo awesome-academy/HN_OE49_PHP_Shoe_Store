@@ -16,6 +16,7 @@
     <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <input type="hidden" name="id" value="{{ $product->id }}">
         <div class="form-group mb-3">
             <label for="name">{{ __('product_name') }}</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}">

@@ -62,7 +62,7 @@
                                 </li>
                             @endif
                         @else
-                            <form class="navbar-form" action="">
+                            <form class="navbar-form" action="{{ route('all') }}">
                                 <div class="input-group">
                                     <input name="name" class="form-control" placeholder="{{ __('search') }}">
                                     <button type="submit" class="btn btn-secondary me-5">
@@ -113,6 +113,9 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link text-uppercase h5 me-2" href="/"><i class="fa-solid fa-house-user"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn-select nav-link text-uppercase h5 me-2" href="{{ route('all') }}">{{__('product')}}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn-select nav-link text-uppercase h5 me-2" href="{{ route('shop') }}">{{__('shop now')}}</a>

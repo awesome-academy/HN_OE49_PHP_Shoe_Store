@@ -12,6 +12,7 @@ $(document).ready(function(){
         $("#rateYo").rateYo({
             rating: 0,
             starWidth: "15px",
+            fullStar: true,
         }).on('rateyo.set', function (e, data) {
             $('#rating').val(data.rating)
         });
@@ -30,6 +31,10 @@ $(document).ready(function(){
 
     $('#update-order-status').click(function() {
         return confirm($('#update-order-status').attr("data-cf"));
+    })
+
+    $('#btn-edit-cmt').click(function () {
+        $('#form-edit-cmt').toggleClass('visually-hidden');
     })
 });
 

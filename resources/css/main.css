@@ -51,10 +51,20 @@ tr td #desc {
     overflow: hidden;
 }
 
-#btn-del {
+#btn-del, #btn-edit-cmt {
     border: none; 
     background: none;
+    cursor: pointer;
 }
+
+#btn-del:hover, #btn-edit-cmt:hover {
+    color: #0a5aa0;
+}
+
+small, small button {
+    color: #6790f8;
+}
+
 form input, form textarea, form select {
     padding: 0.5em !important;
 }

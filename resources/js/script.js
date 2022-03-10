@@ -21,6 +21,7 @@ $(document).ready(function(){
     $(function () {
         $("#rateYoP").rateYo({
             rating: $('#prd-rate').val(),
+            starWidth: "21px",
             readOnly: true
         })
     })
@@ -36,6 +37,18 @@ $(document).ready(function(){
     $('#btn-edit-cmt').click(function () {
         $('#form-edit-cmt').toggleClass('visually-hidden');
     })
+
+    $('.add').click(function () {
+		if ($(this).prev().val() < $('.count').attr('max')) {
+            $(this).prev().val(+$(this).prev().val() + 1);
+		}
+    });
+    $('.sub').click(function () {
+        if ($(this).next().val() > 1) {
+            if ($(this).next().val() > 1) 
+                $(this).next().val(+$(this).next().val() - 1);
+        }
+    });
 });
 
 $(document).ready(function() {

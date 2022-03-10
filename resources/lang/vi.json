@@ -95,5 +95,8 @@
     "numeric": "Trường :attribute phải là một số.",
     "rating success": "Đã gửi bình luận.",
     "comment fail": "Cập nhật thất bại. :attr không được để trống",
-    "content": "Nội dung"
+    "content": "Nội dung",
+    "review": "Đánh giá",
+    "sold": "Đã bán",
+    "no comment": "Không có bình luận nào cho sản phẩm này"
 } 

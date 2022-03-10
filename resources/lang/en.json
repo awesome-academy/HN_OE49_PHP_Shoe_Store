@@ -92,5 +92,8 @@
     "sure update": "Are you sure you want to change this order status?",
     "history": "Orders History",
     "not enough": ":attr shoes are now only :qtt pairs",
-    "numeric": "The :attr must be a number."
+    "numeric": "The :attr must be a number.",
+    "rating success": "Comment sent.",
+    "comment fail": "Update failed. :attr cannot be blank",
+    "content": "Content"
 }

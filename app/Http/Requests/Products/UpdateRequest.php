@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:products,name,' . request()->id,
             'price' => 'required|numeric|min:0|max:1000000000',
             'quantity' => 'required|numeric|min:1',
             'brand_id' => 'required|exists:brands,id',
@@ -36,8 +36,9 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => __('required', ['attr' => __('name')]),
-            'name.string' => __('string', ['attr' => __('name')]),
+            'name.required' => __('required', ['attr' => __('product_name')]),
+            'name.string' => __('string', ['attr' => __('product_name')]),
+            'name.unique' => __('unique', ['attr' => __('product_name')]),
             'price.required' => __('required', ['attr' => __('price')]),
             'price.numeric' => __('numeric', ['attr' => __('price')]),
             'price.min' => __('min', ['attr' => __('price'), 'value' => '0']),

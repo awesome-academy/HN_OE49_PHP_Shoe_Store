@@ -37,8 +37,9 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => __('required', ['attr' => __('name')]),
-            'name.string' => __('string', ['attr' => __('name')]),
+            'name.required' => __('required', ['attr' => __('product_name')]),
+            'name.string' => __('string', ['attr' => __('product_name')]),
+            'name.unique' => __('unique', ['attr' => __('product_name')]),
             'price.required' => __('required', ['attr' => __('price')]),
             'price.numeric' => __('numeric', ['attr' => __('price')]),
             'price.min' => __('min', ['attr' => __('price'), 'value' => '0']),

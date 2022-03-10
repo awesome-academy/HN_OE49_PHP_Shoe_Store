@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
             <div class="panel-heading">
-                <h4 class="mb-3">{{ __('history order') }}</h4>
+                <h4 class="mb-3">{{ __('history') }}</h4>
             </div>
             <table class="table table-striped table-hover">
                 <thead>

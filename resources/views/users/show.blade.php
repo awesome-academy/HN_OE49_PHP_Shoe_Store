@@ -13,9 +13,11 @@
                     <div class="pro-img-details me-3">
                         <img class="card-image-style" src="{{ asset('images/products/' . $product->images->first()->name) }}">
                     </div>
-                    <div class="pro-img-list text-center">
-                        @foreach ($product->images->skip(1) as $image)
-                            <img src="{{ asset('images/products/' . $image->name) }}" alt="" width="120px" height="120px">
+                    <div class="text-center row">
+                        @foreach ($product->images->skip(1)->take(3) as $image)
+                            <div class="col-7 h-25">
+                                <img src="{{ asset('images/products/' . $image->name) }}" alt="" width="120px" height="120px">
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -28,9 +30,8 @@
                     </div>
                     <h3 class="mt-4">{{ @money($product->price) }}</h3>
                     <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <a href="{{ route('cart.add', $product->id) }}"><i class="fa fa-shopping-cart"></i></a>
+                        <a href="{{ route('cart.add', $product->id) }}" class="text-white"><i class="fa fa-shopping-cart"></i></a>
                     </button>
-                    <button class="btn btn-danger btn-rounded">{{ __('buy now') }}</button>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <h3 class="box-title mt-5">{{ __('general info') }}</h3>
@@ -58,8 +59,11 @@
                     @endphp
                     <h3 class="box-title mt-5">{{ __('comment') }} ({{ $count }})</h3>
                     <hr>
+                    @if ($count == 0)
+                        <p>{{ __('no comment') }}</p>
+                    @endif
                     @foreach ($product->comments as $comment)
-                        <div class="row">
+                        <div class="row mb-4">
                             <div class="col-1">
                                 <div class="avt-cmt">
                                     @if ($comment->user->avatar == null)
@@ -85,8 +89,29 @@
                                         @php $rating--; @endphp
                                     @endforeach
                                 </h5>
-                                <p>{{ $comment->content }}
-                                </p>
+                                <span>{{ $comment->content }}</span><br>
+                                @if ($comment->user_id == Auth::user()->id)
+                                    <form class="ms-5" action="{{ route('comment.destroy', $comment->id) }}" method="POST">
+                                        <small id="btn-edit-cmt">Edit</small>
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <small><button type="submit" id="btn-del" class="btn-delete" data-confirm="{{ __('delete confirm') }}">Delete</button></small>
+                                    </form>
+                                    <form method="POST" id="form-edit-cmt" class="visually-hidden" action="{{ route('comment.update', $comment->id) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $comment->id }}">
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <textarea class="form-control" name="content" id="comment-content" 
+                                            placeholder="{{ __('enter comment') }}" rows="3">{{ $comment->content }}</textarea>
+                                        
+                                        <button type="submit" class="btn btn-primary mt-1">{{ __('update') }}</button>
+                                    </form>
+                                    @error('content')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                @endif
                             </div>
                         </div>
                     @endforeach

@@ -95,5 +95,8 @@
     "numeric": "The :attr must be a number.",
     "rating success": "Comment sent.",
     "comment fail": "Update failed. :attr cannot be blank",
-    "content": "Content"
+    "content": "Content",
+    "review": "Reviews",
+    "sold": "Sold",
+    "no comment": "There are no comments yet for this product"
 }

@@ -20,9 +20,14 @@ class CartController extends Controller
     public function add(CartHelper $cart, $id)
     {
         $product = Product::find($id);
-        $cart->add($product);
+        $quantity = request()->quantity ? request()->quantity : 1;
+        if (is_numeric($quantity)) {
+            $cart->add($product, $quantity);
 
-        return redirect()->back();
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('error', __('numeric', ['attr' => __('quantity') ]));
+        }
     }
 
     public function remove(CartHelper $cart, $id)

@@ -23,15 +23,40 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <h1 class="box-title mt-5 fw-bold">{{ $product->name }}</h1>
-                    <div>
-                        @php $rating = $product->getAvgRatingAttribute(); @endphp
-                        <input type="hidden" id="prd-rate" value="{{ $rating }}">
-                        <div id="rateYoP"></div>
+                    <div class="row line-space">
+                        <div class="d-flex col-3 mt-2 line-block">
+                            @php $rating = $product->getAvgRatingAttribute(); @endphp 
+                            <input type="hidden" id="prd-rate" value="{{ $rating }}">
+                            <a href="#comments" class="fs-5">{{ $product->getAvgRatingAttribute() }}</a>
+                            <div id="rateYoP" class="pb-1"></div> 
+                        </div>
+                        <div class="d-flex col-3 mt-2">
+                            <a href="#comments" class="fs-5 me-2">{{ $product->comments->count() }}</a>
+                            <span class="fs-5">{{ __('review') }}</span>
+                        </div>
                     </div>
-                    <h3 class="mt-4">{{ @money($product->price) }}</h3>
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <a href="{{ route('cart.add', $product->id) }}" class="text-white"><i class="fa fa-shopping-cart"></i></a>
-                    </button>
+                    <div class="d-flex col-3 mt-2">
+                        <span class="fs-6">{{ $product_sold . " ". __('sold') }}</span>
+                    </div>
+                        
+                    <h2 class="mt-3 mb-5">{{ @money($product->price) }}</h2>
+                    <form id="update-price" class="row g-3" action="{{ route('cart.add', $product->id) }}">
+                        <span class="col-2 fs-5">{{ __('quantity') }}</span>
+                        <div class="d-flex col-7">
+                            <button type="button" id="sub" class="sub btn btn-outline-secondary">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <input type="text" class="count w-13 text-center form-control input-number" name="quantity" min="1" max="{{ $product->quantity }}" value="1">
+                            <button type="button" id="add" class="add btn btn-outline-secondary">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-danger px-3 py-2 col-6" data-toggle="tooltip" title="">
+                            <i class="fa fa-shopping-cart"></i>{{ __('add to cart') }}
+                        </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <h3 class="box-title mt-5">{{ __('general info') }}</h3>
@@ -57,10 +82,10 @@
                             $count++;
                         }
                     @endphp
-                    <h3 class="box-title mt-5">{{ __('comment') }} ({{ $count }})</h3>
+                    <h3 class="box-title mt-5" id="comments">{{ __('comment') }} ({{ $count }})</h3>
                     <hr>
                     @if ($count == 0)
-                        <p>{{ __('no comment') }}</p>
+                        <p class="fs-5">{{ __('no comment') }}</p>
                     @endif
                     @foreach ($product->comments as $comment)
                         <div class="row mb-4">

@@ -16,7 +16,10 @@ class AdminOrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user', 'products', 'orderStatus')->paginate(config('paginate.pagination'));
+        $orders = Order::with('user', 'products', 'orderStatus')
+            ->orderBy('order_status_id')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('paginate.pagination'));
 
         return view('admins.orders.index', compact('orders'));
     }

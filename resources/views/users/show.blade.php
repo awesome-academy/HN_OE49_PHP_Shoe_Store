@@ -27,12 +27,11 @@
                         <div class="d-flex col-3 mt-2 line-block">
                             @php $rating = $product->getAvgRatingAttribute(); @endphp 
                             <input type="hidden" id="prd-rate" value="{{ $rating }}">
-                            <a href="#comments" class="fs-5">{{ $product->getAvgRatingAttribute() }}</a>
+                            <a href="#comments" class="fs-5 text-black text-decoration-none">{{ number_format($product->getAvgRatingAttribute(), 1, '.', ',') }}</a>
                             <div id="rateYoP" class="pb-1"></div> 
                         </div>
                         <div class="d-flex col-3 mt-2">
-                            <a href="#comments" class="fs-5 me-2">{{ $product->comments->count() }}</a>
-                            <span class="fs-5">{{ __('review') }}</span>
+                            <a href="#comments" class="fs-5 me-2 text-black text-decoration-none">{{ $product->comments->count() . ' ' .__('review')}}</a>
                         </div>
                     </div>
                     <div class="d-flex col-3 mt-2">
@@ -46,7 +45,7 @@
                             <button type="button" id="sub" class="sub btn btn-outline-secondary">
                                 <i class="fa fa-minus" aria-hidden="true"></i>
                             </button>
-                            <input type="text" class="count w-13 text-center form-control input-number" name="quantity" min="1" max="{{ $product->quantity }}" value="1">
+                            <input type="text" id="qty" class="count w-13 text-center form-control input-number" name="quantity" min="1" max="{{ $product->quantity }}" value="1">
                             <button type="button" id="add" class="add btn btn-outline-secondary">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>

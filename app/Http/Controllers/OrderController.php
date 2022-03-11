@@ -80,11 +80,25 @@ class OrderController extends Controller
         $brands = Brand::all();
         $shipping = 0;
         $total_price = 0;
-        $orders = Order::where('user_id', Auth::user()->id)->with('products', 'orderStatus')->findOrFail($id);
-        foreach ($orders->products as $product) {
+        $order = Order::where('user_id', Auth::user()->id)->with('products', 'orderStatus')->findOrFail($id);
+        foreach ($order->products as $product) {
             $total_price += $product->price * $product->pivot->quantity;
         }
 
-        return view('users.history.show')->with(compact('brands', 'orders', 'shipping', 'total_price'));
+        return view('users.history.show')->with(compact('brands', 'order', 'shipping', 'total_price'));
+    }
+    
+    public function cancel($id)
+    {
+        $order = Order::findorfail($id);
+        $status = request()->order_status_id;
+        if ($status == config('orderstatus.waiting') || $status == config('orderstatus.preparing')) {
+            $order->order_status_id = config('orderstatus.cancelled');
+            $order->update();
+    
+            return redirect()->route('user.history')->with('success', __('success order cancel'));
+        } else {
+            return redirect()->route('user.history')->with('error', __('fail order cancel'));
+        }
     }
 }

@@ -40,17 +40,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orders->products as $product)
+                        @foreach ($order->products as $product)
                             <tr>
                                 <td>
-                                    <img class="img-product" src="{{ asset('images/products/'. $product->images->first()->name) }}">
+                                    <a href="{{ route('shop.detail', $product->id) }}">
+                                        <img class="img-product" src="{{ asset('images/products/'. $product->images->first()->name) }}">
+                                    </a>
                                 </td>
                                 <td>
                                     <div id="prdname">
-                                        {{ $product['name'] }}
+                                        {{ $product->name }}
                                     </div>
                                 </td>
-                                <td>{{ @money($product['price']) }}</td>
+                                <td>{{ @money($product->price) }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td class="total-price">{{ @money($product->price * $product->pivot->quantity) }}</td>
                             </tr>
@@ -94,6 +96,16 @@
             </div> 
         </div>
     </div>
-    <a class="btn btn-danger" href="{{ route('user.history') }}"><i class="fa fa-fw fa-lg fa-arrow-left"></i>{{ __('back') }}</a>
+    <div class="row">
+        <div class="col-6">
+            <a class="btn btn-danger" href="{{ route('user.history') }}"><i class="fa fa-fw fa-lg fa-arrow-left"></i>{{ __('back') }}</a>
+        </div>
+        <form class="col-6 text-end" action="{{ route('user.cancel', $order->id) }}" method="post">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="order_status_id" value="{{ $order->orderStatus->id }}">
+            <button type="submit" id="btn-cancel-order" data-cf="{{ __('confirm cancel') }}" class="btn btn-secondary">{{ __('cancel order') }}</button>
+        </form>
+    </div>
 </div>
 @endsection

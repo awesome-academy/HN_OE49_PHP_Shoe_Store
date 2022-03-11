@@ -38,17 +38,20 @@ $(document).ready(function(){
         $('#form-edit-cmt').toggleClass('visually-hidden');
     })
 
-    $('.add').click(function () {
-		if ($(this).prev().val() < $('.count').attr('max')) {
-            $(this).prev().val(+$(this).prev().val() + 1);
+    $('#add').click(function () {
+		if (Number($('#qty').val()) < $('#qty').attr('max')) {
+            $('#qty').attr('value', Number($('#qty').val()) + 1);
 		}
     });
-    $('.sub').click(function () {
-        if ($(this).next().val() > 1) {
-            if ($(this).next().val() > 1) 
-                $(this).next().val(+$(this).next().val() - 1);
-        }
+    $('#sub').click(function () {
+        if (Number($('#qty').val()) > 1) {
+            $('#qty').attr('value', Number($('#qty').val()) - 1);
+		}
     });
+
+    $('#btn-cancel-order').click(function () {
+        return confirm($('#btn-cancel-order').attr('data-cf'));
+    })
 });
 
 $(document).ready(function() {

@@ -62,14 +62,6 @@
                                 </li>
                             @endif
                         @else
-                            <form class="navbar-form" action="">
-                                <div class="input-group">
-                                    <input name="name" class="form-control" placeholder="{{ __('search') }}">
-                                    <button type="submit" class="btn btn-secondary me-5">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
                             <li class="nav-item dropdown">
                                 <img class="img-icon" id="avt" width="40px" src="
                                     @if (Auth::user()->avatar == null)
@@ -108,7 +100,7 @@
         <main class="py-2">
             <div class="container">
             @if (Auth::user())
-                <nav class="navbar navbar-expand-md navbar-light mb-6">
+                <nav class="navbar navbar-expand-md navbar-light mb-2">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">

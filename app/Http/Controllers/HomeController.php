@@ -29,6 +29,12 @@ class HomeController extends Controller
         if ($request->name) {
             $products = $products->where('name', 'like', '%' . $request->name . '%');
         }
+        if ($request->min_price && is_numeric($request->min_price)) {
+            $products = $products->where('price', '>', $request->min_price);
+        }
+        if ($request->max_price && is_numeric($request->max_price)) {
+            $products = $products->where('price', '<', $request->max_price);
+        }
         $products = $products->paginate(config('paginate.pagination'));
         $brands = Brand::all();
 

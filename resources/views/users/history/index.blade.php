@@ -25,9 +25,18 @@
                         <tr>
                             <td class="text-center">{{ $order->id }}</td>
                             <td class="text-center">{{ $order->products->count() }}</td>
-                            <td class="text-center">{{ $order->total_price }}</td>
+                            <td class="text-center">{{ @money($order->total_price) }}</td>
                             <td class="text-center">
-                                <span class="badge bg-danger">{{ $order->orderStatus->name }}</span>
+                                @switch($order->orderStatus->id)
+                                    @case(config('orderstatus.delivered'))
+                                        <span class="badge bg-success">{{ ucfirst($order->orderStatus->name) }}</span>
+                                        @break
+                                    @case(config('orderstatus.cancelled'))
+                                        <span class="badge bg-secondary">{{ ucfirst($order->orderStatus->name) }}</span>
+                                        @break
+                                    @default
+                                        <span class="badge bg-warning">{{ ucfirst($order->orderStatus->name) }}</span>
+                                @endswitch
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('user.history.detail', $order->id) }}">

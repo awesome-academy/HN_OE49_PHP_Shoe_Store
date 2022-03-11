@@ -40,9 +40,13 @@ class CartController extends Controller
     public function update(CartHelper $cart, $id)
     {
         $quantity = request()->quantity ? request()->quantity : 1;
-        $cart->update($id, $quantity);
+        if (is_numeric($quantity)) {
+            $cart->update($id, $quantity);
 
-        return redirect()->back();
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('error', __('numeric', ['attr' => __('quantity') ]));
+        }
     }
 
     public function clear(CartHelper $cart)

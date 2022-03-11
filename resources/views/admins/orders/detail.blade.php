@@ -54,7 +54,16 @@
     <div class="mb-3">
         <strong>{{ __('status') }}</strong>
         <div>
-            <p class="badge bg-gradient-faded-danger">{{ $order->orderStatus->name }}</p>
+            @switch($order->orderStatus->id)
+                @case(config('orderstatus.delivered'))
+                    <span class="badge bg-gradient-faded-success">{{ $order->orderStatus->name }}</span>
+                    @break
+                @case(config('orderstatus.cancelled'))
+                    <span class="badge bg-gradient-secondary">{{ $order->orderStatus->name }}</span>
+                    @break
+                @default
+                    <span class="badge bg-gradient-faded-warning">{{ $order->orderStatus->name }}</span>
+            @endswitch
         </div>
     </div>
 

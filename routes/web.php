@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
+use App\Models\OrderProduct;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,4 +65,5 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::post('/placeorder', [OrderController::class, 'postOrder'])->name('placeorder');
     Route::get('/history', [OrderController::class, 'historyOrder'])->name('user.history');
     Route::get('/history/{id}/detail', [OrderController::class, 'showOrderDetail'])->name('user.history.detail');
+    Route::put('/cancel/{id}', [OrderController::class, 'cancel'])->name('user.cancel');
 });

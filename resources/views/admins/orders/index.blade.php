@@ -29,7 +29,16 @@
                 <td class="text-center">{{ $order->products->count() }}</td>
                 <td class="text-center">{{ @money($order->total_price) }}</td>
                 <td class="text-center">
-                    <span class="badge bg-gradient-faded-danger">{{ $order->orderStatus->name }}</span>
+                    @switch($order->orderStatus->id)
+                        @case(config('orderstatus.delivered'))
+                            <span class="badge bg-gradient-faded-success">{{ $order->orderStatus->name }}</span>
+                            @break
+                        @case(config('orderstatus.cancelled'))
+                            <span class="badge bg-gradient-secondary">{{ $order->orderStatus->name }}</span>
+                            @break
+                        @default
+                            <span class="badge bg-gradient-faded-warning">{{ $order->orderStatus->name }}</span>
+                    @endswitch                
                 </td>
                 <td class="text-center">
                     <a href="{{ route('orders.show', $order->id) }}">

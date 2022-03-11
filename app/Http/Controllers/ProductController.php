@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Http\Requests\Products\StoreRequest;
 use App\Http\Requests\Products\UpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
@@ -16,11 +17,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderby('created_at', 'DESC')->paginate(config('paginate.pagination'));
+        $brands = Brand::all();
+        $products = Product::query();
+        if ($request->name) {
+            $products = $products->where('name', 'like', '%' . $request->name .'%');
+        }
+        if ($request->brand_id) {
+            $products = $products->where('brand_id', request()->brand_id);
+        }
+        $products = $products->orderby('created_at', 'DESC')->paginate(config('paginate.pagination'));
 
-        return view('admins.products.index')->with(compact('products'));
+        return view('admins.products.index')->with(compact('products', 'brands'));
     }
 
     /**

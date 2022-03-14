@@ -52,6 +52,10 @@ $(document).ready(function(){
     $('#btn-cancel-order').click(function () {
         return confirm($('#btn-cancel-order').attr('data-cf'));
     })
+
+    $('#btn-buy-again').click(function () {
+        return confirm($('#btn-buy-again').attr('data-cf'));
+    })
 });
 
 $(document).ready(function() {

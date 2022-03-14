@@ -15,7 +15,7 @@ class UserProductController extends Controller
     public function showByRating(Request $request)
     {
         $products = Product::withAvg('comments', 'rating')
-                        ->orderBy('comments_avg_rating', 'desc');
+            ->orderBy('comments_avg_rating', 'desc');
         $products = $products->paginate(config('paginate.pagination'));
         $brands = Brand::all();
 

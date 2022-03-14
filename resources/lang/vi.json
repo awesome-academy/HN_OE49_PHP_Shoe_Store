@@ -102,5 +102,8 @@
     "enter product name": "Nhập tên sản phẩm",
     "fail order cancel": "Hủy đơn hàng không thành công.",
     "success order cancel": "Hủy đơn hàng thành công.",
-    "confirm cancel": "Bạn có muốn hủy đơn đặt hàng này không?"
+    "confirm cancel": "Bạn có muốn hủy đơn đặt hàng này không?",
+    "cancel order": "Hủy đơn hàng",
+    "reorder": "Đặt hàng lại",
+    "confirm reorder": "Bạn có muốn đặt lại đơn hàng này?"
 } 

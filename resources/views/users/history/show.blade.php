@@ -86,9 +86,7 @@
                             </tr>
                             <tr>
                                 <td><strong>{{ __('total') }}<strong></td>
-                                <td class="total-check">{{ @money($total_price + $shipping) }}
-                                    <input type="hidden" name="total_price" value="{{ $total_price + $shipping }}">
-                                </td>
+                                <td class="total-check">{{ @money($total_price + $shipping) }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -100,11 +98,19 @@
         <div class="col-6">
             <a class="btn btn-danger" href="{{ route('user.history') }}"><i class="fa fa-fw fa-lg fa-arrow-left"></i>{{ __('back') }}</a>
         </div>
-        <form class="col-6 text-end" action="{{ route('user.cancel', $order->id) }}" method="post">
+        <form class="col-6 text-end" action="{{ route('user.updatestatus', $order->id) }}" method="post">
             @csrf
             @method('PUT')
             <input type="hidden" name="order_status_id" value="{{ $order->orderStatus->id }}">
-            <button type="submit" id="btn-cancel-order" data-cf="{{ __('confirm cancel') }}" class="btn btn-secondary">{{ __('cancel order') }}</button>
+            @if ($order->orderStatus->id == config('orderstatus.waiting') || $order->orderStatus->id == config('orderstatus.preparing'))
+                <button type="submit" id="btn-cancel-order" data-cf="{{ __('confirm cancel') }}" 
+                    class="btn btn-secondary">{{ __('cancel order') }}</button>
+            @else 
+                @if ($order->orderStatus->id == config('orderstatus.cancelled'))
+                    <button type="submit" id="btn-buy-again" data-cf="{{ __('confirm reorder') }}" 
+                        class="btn btn-success">{{ __('reorder') }}</button>
+                @endif
+            @endif
         </form>
     </div>
 </div>

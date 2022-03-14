@@ -35,12 +35,14 @@ class OrderController extends Controller
         if (Session::has('cart')) {
             $order_status = config('orderstatus.waiting');
             $cart = session()->get('cart');
+            $total_price = 0;
             
             $order_product = [];
             foreach ($cart as $key => $value) {
                 $prd = Product::find($key);
                 if ($prd['quantity'] >= $value['quantity']) {
                     $prd->decrement('quantity', $value['quantity']);
+                    $total_price += $value['quantity'] * $value['price'];
                 } else {
                     return redirect()->route('cart')
                         ->with('error', __('not enough', ['attr' => $prd['name'], 'qtt' => $prd['quantity']]));
@@ -48,7 +50,7 @@ class OrderController extends Controller
             }
             $orders = Order::create([
                 'user_id' => Auth::user()->id,
-                'total_price' => $request->total_price,
+                'total_price' => $total_price,
                 'order_status_id' => $order_status,
             ]);
             foreach ($cart as $key => $value) {
@@ -88,15 +90,34 @@ class OrderController extends Controller
         return view('users.history.show')->with(compact('brands', 'order', 'shipping', 'total_price'));
     }
     
-    public function cancel($id)
+    public function updatestatus($id)
     {
         $order = Order::findorfail($id);
         $status = request()->order_status_id;
         if ($status == config('orderstatus.waiting') || $status == config('orderstatus.preparing')) {
             $order->order_status_id = config('orderstatus.cancelled');
+            foreach ($order->products as $product) {
+                $product->quantity += $product->pivot->quantity;
+                $product->update();
+            }
             $order->update();
     
             return redirect()->route('user.history')->with('success', __('success order cancel'));
+        } elseif ($status == config('orderstatus.cancelled')) {
+            foreach ($order->products as $productOrder) {
+                $product = Product::find($productOrder['id']);
+                if ($product['quantity'] >= $productOrder->pivot->quantity) {
+                    $product->decrement('quantity', $productOrder->pivot->quantity);
+                } else {
+                    return redirect()->route('home')
+                        ->with('error', __('not enough', ['attr' => $product['name'], 'qtt' => $product['quantity']]));
+                }
+            }
+            $order->update([
+                'order_status_id' => config('orderstatus.waiting'),
+            ]);
+
+            return redirect()->route('home')->with('success', __('thanks order'));
         } else {
             return redirect()->route('user.history')->with('error', __('fail order cancel'));
         }

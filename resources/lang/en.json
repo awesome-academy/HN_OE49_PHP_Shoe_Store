@@ -103,5 +103,7 @@
     "fail order cancel": "Your order can no longer be cancelled.",
     "success order cancel": "Cancelled order successfully.",
     "cancel order": "Cancel Order",
-    "confirm cancel": "Do you want to cancel this order?"
+    "confirm cancel": "Do you want to cancel this order?",
+    "reorder": "Re-order",
+    "confirm reorder": "Would you like to order this again?"
 }

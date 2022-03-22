@@ -43,6 +43,6 @@ class Product extends Model
 
     public function getAvgRatingAttribute()
     {
-        return $this->comments()->avg('rating');
+        return $this->comments->avg('rating');
     }
 }

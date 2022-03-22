@@ -18,3 +18,4 @@ yarn-error.log
 /public/images/products
 /public/images/profile
 /public/bower_components
+/coverage

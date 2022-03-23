@@ -3,12 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Orders\UpdateRequest;
-use App\Models\Order;
-use App\Models\OrderStatus;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class AdminOrderController extends Controller
 {
+    protected $orderRepo;
+    protected $orderStatusRepo;
+    protected $productRepo;
+
+    public function __construct(
+        OrderRepositoryInterface $orderRepo,
+        OrderStatusRepositoryInterface $orderStatusRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->orderRepo = $orderRepo;
+        $this->orderStatusRepo = $orderStatusRepo;
+        $this->productRepo = $productRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +30,7 @@ class AdminOrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user', 'products', 'orderStatus')
-            ->orderBy('order_status_id')
-            ->orderBy('created_at', 'DESC')
-            ->paginate(config('paginate.pagination'));
+        $orders = $this->orderRepo->getOrder();
 
         return view('admins.orders.index', compact('orders'));
     }
@@ -51,8 +62,10 @@ class AdminOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
+        $order = $this->orderRepo->find($id);
+
         return view('admins.orders.detail', compact('order'));
     }
 
@@ -62,13 +75,14 @@ class AdminOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
+        $order = $this->orderRepo->find($id);
         if ($order->order_status_id == config('orderstatus.delivered')
             || $order->order_status_id == config('orderstatus.cancelled')) {
             return redirect()->route('orders.index')->with('error', __('error update status'));
         }
-        $statuses = OrderStatus::all();
+        $statuses = $this->orderStatusRepo->getAll();
 
         return view('admins.orders.edit', compact('order', 'statuses'));
     }
@@ -80,15 +94,16 @@ class AdminOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, Order $order)
+    public function update(UpdateRequest $request, $id)
     {
+        $order = $this->orderRepo->find($id);
         if ($request->order_status_id == config('orderstatus.cancelled')) {
-            foreach ($order->products as $product) {
-                $product->quantity += $product->pivot->quantity;
-                $product->update();
+            foreach ($this->orderRepo->relation($order->id) as $product) {
+                $product->quantity += $this->productRepo->getQuantity($product);
+                $this->productRepo->update($product->id, ['quantity' => $product->quantity]);
             }
         }
-        $order->update($request->only('order_status_id'));
+        $this->orderRepo->update($id, $request->only('order_status_id'));
 
         return redirect()->route('orders.index')
             ->with('message', __('update order success', ['value' => '#'.$order->id]));

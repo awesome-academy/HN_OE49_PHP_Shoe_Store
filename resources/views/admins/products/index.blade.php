@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-5">
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('products.create') }}">{{ __('create new') ." " .__('product') }}</a>
+                <a class="btn btn-success" id="btn-create" href="{{ route('products.create') }}">{{ __('create new') ." " .__('product') }}</a>
             </div>
         </div>
         <div class="col-7">
@@ -22,7 +22,7 @@
                     @endforeach
                 </select>
                 <input class="form-control w-30 me-3" type="text" placeholder="{{ __('enter product name') }}" name="name" value="{{ request()->name ? request()->name : '' }}">
-                <button class="btn btn-secondary mb-0" type="submit">Search</button>
+                <button class="btn btn-secondary mb-0" type="submit">{{__('search')}}</button>
             </form>
         </div>
     </div>

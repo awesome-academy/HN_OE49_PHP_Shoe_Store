@@ -7,7 +7,7 @@
 @section('content')
 <div class="d-flex justify-content-between">
     <h2>{{ __('list') . __('brand') }}</h2>
-    <a href="{{ route('brands.create') }}" class="btn btn-info">
+    <a id="btn-create-brand" href="{{ route('brands.create') }}" class="btn btn-info">
         <i class="fa-light fa-plus"></i> {{ __('create new') }}
     </a>
 </div>

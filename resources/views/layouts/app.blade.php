@@ -96,7 +96,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-2">
             <div class="container">
             @if (Auth::user())

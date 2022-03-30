@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+    <div class="text-dark h4">
+        {{ __('edit brand') . ": " .$brand->name }}
+    </div>
     <form action="{{ route('brands.update', $brand->id) }}" method="POST">
         @csrf
         @method('PUT')

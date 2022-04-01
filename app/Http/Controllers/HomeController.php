@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Product;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    protected $productRepo;
+    protected $brandRepo;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        BrandRepositoryInterface $brandRepo
+    ) {
         $this->middleware('auth');
+        $this->productRepo = $productRepo;
+        $this->brandRepo = $brandRepo;
     }
 
     /**
@@ -25,18 +31,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::orderBy('created_at', 'desc');
-        if ($request->name) {
-            $products = $products->where('name', 'like', '%' . $request->name . '%');
-        }
-        if ($request->min_price && is_numeric($request->min_price)) {
-            $products = $products->where('price', '>', $request->min_price);
-        }
-        if ($request->max_price && is_numeric($request->max_price)) {
-            $products = $products->where('price', '<', $request->max_price);
-        }
-        $products = $products->paginate(config('paginate.pagination'));
-        $brands = Brand::all();
+        $products = $this->productRepo->getAllWithSearch();
+        $brands = $this->brandRepo->getAll();
 
         return view('home')->with(compact('products', 'brands'));
     }

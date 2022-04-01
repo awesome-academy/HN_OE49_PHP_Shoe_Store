@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th class="w-10"></th>
-                <th>{{ __('product_name') }}</th>
+                <th class="w-10">{{ __('product_name') }}</th>
                 <th class="w-10">{{ __('price') }}</th>
                 <th class="w-18">{{ __('quantity') }}</th>
                 <th class="w-13">{{ __('total price') }}</th>
@@ -32,13 +32,11 @@
                     </td>
                     <td>{{ @money($item['price']) }}</td>
                     <td>
-                        <form id="update-price" class="row g-3" action="{{ route('cart.update', $item['id']) }}">
-                            <div class="col-5">
+                        <form id="update-price" class="row justify-content-center" action="{{ route('cart.update', $item['id']) }}">
+                            <div class="input-group w-75">
                                 <input type="number" name="quantity" class="form-control" min="1" max="{{ $product->find($item['id'])['quantity'] }}" value="{{ $item['quantity'] }}">
+                                <button class="btn btn-primary" type="submit"> {{ __('update') }}</button>
                             </div>
-                            <div class="col-7">
-                                <button id="update" type="submit" class="btn btn-primary"> {{ __('update') }}</button>
-                              </div>
                         </form>
                     </td>
                     <td class="total-price">{{ @money($item['price']*$item['quantity']) }}</td>

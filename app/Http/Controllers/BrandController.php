@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Brands\StoreRequest;
 use App\Http\Requests\Brands\UpdateRequest;
-use App\Models\Brand;
-use Illuminate\Http\Request;
+use App\Repositories\Brand\BrandRepositoryInterface;
 
 class BrandController extends Controller
 {
+    protected $brandRepo;
+
+    public function __construct(BrandRepositoryInterface $brandRepo)
+    {
+        $this->brandRepo = $brandRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::orderby('created_at', 'ASC')->paginate(config('paginate.pagination'));
+        $brands = $this->brandRepo->getAllByPaginate();
         
         return view('admins.brands.index', compact('brands'));
     }
@@ -39,9 +44,9 @@ class BrandController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        if (Brand::create($request->all())) {
-            return redirect()->route('brands.index')->with('message', __('create success'));
-        }
+        $this->brandRepo->create($request->all());
+
+        return redirect()->route('brands.index')->with('message', __('create success'));
     }
 
     /**
@@ -61,8 +66,10 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand $brand)
+    public function edit($id)
     {
+        $brand = $this->brandRepo->find($id);
+        
         return view('admins.brands.edit', compact('brand'));
     }
 
@@ -73,9 +80,9 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, Brand $brand)
+    public function update(UpdateRequest $request, $id)
     {
-        $brand->update($request->only('name', 'desc'));
+        $this->brandRepo->update($id, $request->only('name', 'desc'));
 
         return redirect()->route('brands.index')->with('message', __('update success'));
     }
@@ -86,9 +93,9 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        $brand->delete();
+        $this->brandRepo->delete($id);
 
         return redirect()->route('brands.index')->with('message', __('delete success'));
     }

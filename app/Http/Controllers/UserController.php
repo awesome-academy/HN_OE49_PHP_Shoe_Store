@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $profileRepo;
+    protected $brandRepo;
+
+    public function __construct(
+        UserRepositoryInterface $userRepo
+    ) {
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderby('name', 'ASC')->paginate(config('paginate.pagination'));
+        $users = $this->userRepo->getAllUser();
 
         return view('admins.users.index', compact('users'));
     }

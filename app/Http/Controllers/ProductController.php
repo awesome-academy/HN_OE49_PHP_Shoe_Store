@@ -2,16 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Image;
-use App\Models\Product;
 use App\Http\Requests\Products\StoreRequest;
 use App\Http\Requests\Products\UpdateRequest;
+use App\Models\Product;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    protected $productRepo;
+    protected $brandRepo;
+    protected $imageRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        BrandRepositoryInterface $brandRepo,
+        ImageRepositoryInterface $imageRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->brandRepo = $brandRepo;
+        $this->imageRepo = $imageRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,15 +33,9 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $brands = Brand::all();
-        $products = Product::query();
-        if ($request->name) {
-            $products = $products->where('name', 'like', '%' . $request->name .'%');
-        }
-        if ($request->brand_id) {
-            $products = $products->where('brand_id', request()->brand_id);
-        }
-        $products = $products->orderby('created_at', 'DESC')->paginate(config('paginate.pagination'));
+        $brands = $this->brandRepo->getAll();
+        $products = $this->productRepo->searchProduct($request->name, $request->brand_id);
+        $products = $products->paginate(config('paginate.pagination'));
 
         return view('admins.products.index')->with(compact('products', 'brands'));
     }
@@ -39,7 +47,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brands = Brand::all();
+        $brands = $this->brandRepo->getAll();
 
         return view('admins.products.create')->with(compact('brands'));
     }
@@ -54,8 +62,8 @@ class ProductController extends Controller
     {
         $data = [];
         $files = $request->file('images');
-        if ($request->hasFile('images')) {
-            $product = Product::create([
+        if ($request->has('images')) {
+            $product = $this->productRepo->create([
                 'name' => $request->name,
                 'price' => $request->price,
                 'quantity' => $request->quantity,
@@ -70,7 +78,7 @@ class ProductController extends Controller
                     'name' => $new_name,
                 ];
             }
-            Image::insert($data);
+            $this->imageRepo->insert($data);
         }
 
         return redirect()->route('products.create')->with('message', __('create success'));
@@ -84,8 +92,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findorfail($id);
-        $images = Image::where('product_id', $product->id)->get();
+        $product = $this->productRepo->find($id);
+        $images = $this->imageRepo->getImage($product->id);
 
         return view('admins.products.show')->with(compact('product', 'images'));
     }
@@ -98,9 +106,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $brands = Brand::all();
-        $product = Product::findorfail($id);
-        $images = Image::where('product_id', $product->id)->get();
+        $brands = $this->brandRepo->getAll();
+        $product = $this->productRepo->find($id);
+        $images = $this->imageRepo->getImage($product->id);
 
         return view('admins.products.edit')->with(compact('brands', 'product', 'images'));
     }
@@ -114,7 +122,7 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $product = Product::findorfail($id);
+        $product = $this->productRepo->find($id);
         $upload_path = public_path('images/products/');
         $product->update([
             'name' => $request->name,
@@ -123,7 +131,7 @@ class ProductController extends Controller
             'brand_id' => $request->brand_id,
             'desc' => $request->desc,
         ]);
-        if ($request->hasFile('images')) {
+        if ($request->has('images')) {
             $data = [];
             if ($files = $request->file('images')) {
                 foreach ($files as $key => $file) {
@@ -134,7 +142,7 @@ class ProductController extends Controller
                         'name' => $new_name,
                     ];
                 }
-                Image::insert($data);
+                $this->imageRepo->insert($data);
             }
         }
         return redirect()->route('products.index')->with('message', __('update success'));
@@ -148,26 +156,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findorfail($id);
-        $upload_path = public_path('images/products/');
-        $images = Image::where('product_id', $product->id)->get();
+        $images = $this->imageRepo->getImage($id);
         foreach ($images as $image) {
-            if (File::exists($upload_path . $image->name)) {
-                File::delete($upload_path . $image->name);
-            }
+            $file_name = public_path('images/products/') . $image->name;
+            $this->imageRepo->deleteFileImage($file_name);
         }
-        $product->delete();
+        $this->productRepo->delete($id);
 
         return redirect()->route('products.index')->with('message', __('delete success'));
     }
 
     public function deleteImage($id)
     {
-        $images = Image::findOrFail($id);
-        $upload_path = 'images/products/';
-        if (File::exists($upload_path . $images->name)) {
-            File::delete($upload_path . $images->name);
-        }
+        $images = $this->imageRepo->find($id);
+        $file_name = 'images/products/' . $images->name;
+        $this->imageRepo->deleteFileImage($file_name);
         $images->delete();
 
         return back();

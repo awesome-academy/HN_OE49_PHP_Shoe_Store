@@ -11,4 +11,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::class;
     }
+
+    public function getAllUser()
+    {
+        return $this->model::orderby('name', 'ASC')
+            ->paginate(config('paginate.pagination'));
+    }
+
+    public function getUserByOrderDelivered($id)
+    {
+        return $this->model::with(['orders' => function ($query) {
+            $query->where('order_status_id', config('orderstatus.delivered'));
+        }])->where('id', $id)->first();
+    }
 }

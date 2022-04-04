@@ -9,15 +9,42 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserProductController extends Controller
 {
+    protected $productRepo;
+    protected $brandRepo;
+    protected $cmtRepo;
+    protected $imageRepo;
+    protected $userRepo;
+    protected $orderRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        BrandRepositoryInterface $brandRepo,
+        CommentRepositoryInterface $cmtRepo,
+        ImageRepositoryInterface $imageRepo,
+        UserRepositoryInterface $userRepo,
+        OrderRepositoryInterface $orderRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->brandRepo = $brandRepo;
+        $this->cmtRepo = $cmtRepo;
+        $this->imageRepo = $imageRepo;
+        $this->userRepo = $userRepo;
+        $this->orderRepo = $orderRepo;
+    }
+
     public function showByRating(Request $request)
     {
-        $products = Product::withAvg('comments', 'rating')
-            ->orderBy('comments_avg_rating', 'desc');
-        $products = $products->paginate(config('paginate.pagination'));
-        $brands = Brand::all();
+        $products = $this->productRepo->getProductByAvgRating();
+        $brands = $this->brandRepo->getAll();
 
         return view('users.shop')->with(compact('products', 'brands'));
     }
@@ -25,24 +52,17 @@ class UserProductController extends Controller
     public function showDetails($id)
     {
         $product_sold = 0;
-        $brands = Brand::all();
-        $comments = Comment::all();
+        $brands = $this->brandRepo->getAll();
+        $comments = $this->cmtRepo->getAll();
         $allowComment = false;
 
-        $product = Product::with(['orders' => function ($query) {
-            $query->where('order_status_id', config('orderstatus.delivered'));
-        }])->findorfail($id);
-        
-        foreach ($product->orders as $order) {
-            $product_sold += $order->pivot->quantity;
+        $product = $this->productRepo->getProductByOrderDelivered($id);
+        foreach ($this->productRepo->relation($product) as $order) {
+            $product_sold += $this->orderRepo->getQuantity($order);
         }
         
-        $images = Image::where('product_id', $product->id)->get();
-        
-
-        $user = User::with(['orders' => function ($query) {
-            $query->where('order_status_id', config('orderstatus.delivered'));
-        }])->where('id', Auth::user()->id)->first();
+        $images = $this->imageRepo->getImage($product->id);
+        $user = $this->userRepo->getUserByOrderDelivered(Auth::user()->id);
         
         foreach ($user->orders as $order) {
             foreach ($order->products as $p) {
@@ -62,10 +82,9 @@ class UserProductController extends Controller
 
     public function showByBrand(Request $request, $id)
     {
-        $brand = Brand::findorfail($id);
-        $products = Product::query();
-        $products = $products->where('brand_id', $id)->paginate(config('paginate.pagination'));
-        $brands = Brand::all();
+        $brand = $this->brandRepo->find($id);
+        $products = $this->productRepo->getAll()->where('brand_id', $id)->paginate(config('paginate.pagination'));
+        $brands = $this->brandRepo->getAll();
 
         return view('users.showByBrand', compact('brand', 'products', 'brands'));
     }

@@ -26,4 +26,23 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         
         return $order->products;
     }
+
+    public function getQuantity($order)
+    {
+        return $order->pivot->quantity;
+    }
+
+    public function getHistoryOrder($user_id)
+    {
+        return $this->model::where('user_id', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function getOrderDetail($user_id, $order_id)
+    {
+        return $this->model::where('user_id', $user_id)
+            ->with('products', 'orderStatus')
+            ->find($order_id);
+    }
 }

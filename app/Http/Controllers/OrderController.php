@@ -2,22 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Order\OrderRepositoryInterface;
 
 class OrderController extends Controller
 {
+    protected $productRepo;
+    protected $brandRepo;
+    protected $orderRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        BrandRepositoryInterface $brandRepo,
+        OrderRepositoryInterface $orderRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->brandRepo = $brandRepo;
+        $this->orderRepo = $orderRepo;
+    }
+
     public function infoOrder()
     {
         $cart = [];
         $shipping = 0;
-        $brands = Brand::all();
+        $brands = $this->brandRepo->getAll();
         if (Session::has('cart')) {
             $cart = session()->get('cart');
             if (count($cart) > 0) {
@@ -39,7 +53,7 @@ class OrderController extends Controller
             
             $order_product = [];
             foreach ($cart as $key => $value) {
-                $prd = Product::find($key);
+                $prd = $this->productRepo->find($key);
                 if ($prd['quantity'] >= $value['quantity']) {
                     $prd->decrement('quantity', $value['quantity']);
                     $total_price += $value['quantity'] * $value['price'];
@@ -48,7 +62,7 @@ class OrderController extends Controller
                         ->with('error', __('not enough', ['attr' => $prd['name'], 'qtt' => $prd['quantity']]));
                 }
             }
-            $orders = Order::create([
+            $orders = $this->orderRepo->create([
                 'user_id' => Auth::user()->id,
                 'total_price' => $total_price,
                 'order_status_id' => $order_status,
@@ -71,20 +85,20 @@ class OrderController extends Controller
 
     public function historyOrder()
     {
-        $brands = Brand::all();
-        $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $brands = $this->brandRepo->getAll();
+        $orders = $this->orderRepo->getHistoryOrder(Auth::user()->id);
 
         return view('users.history.index')->with(compact('brands', 'orders'));
     }
 
     public function showOrderDetail($id)
     {
-        $brands = Brand::all();
+        $brands = $this->brandRepo->getAll();
         $shipping = 0;
         $total_price = 0;
-        $order = Order::where('user_id', Auth::user()->id)->with('products', 'orderStatus')->findOrFail($id);
-        foreach ($order->products as $product) {
-            $total_price += $product->price * $product->pivot->quantity;
+        $order = $this->orderRepo->getOrderDetail(Auth::user()->id, $id);
+        foreach ($this->orderRepo->relation($order->id) as $product) {
+            $total_price += $product->price * $this->productRepo->getQuantity($product);
         }
 
         return view('users.history.show')->with(compact('brands', 'order', 'shipping', 'total_price'));
@@ -92,22 +106,22 @@ class OrderController extends Controller
     
     public function updatestatus($id)
     {
-        $order = Order::findorfail($id);
+        $order = $this->orderRepo->find($id);
         $status = request()->order_status_id;
         if ($status == config('orderstatus.waiting') || $status == config('orderstatus.preparing')) {
             $order->order_status_id = config('orderstatus.cancelled');
-            foreach ($order->products as $product) {
-                $product->quantity += $product->pivot->quantity;
+            foreach ($this->orderRepo->relation($id) as $product) {
+                $product->quantity += $this->productRepo->getQuantity($product);
                 $product->update();
             }
             $order->update();
     
             return redirect()->route('user.history')->with('success', __('success order cancel'));
         } elseif ($status == config('orderstatus.cancelled')) {
-            foreach ($order->products as $productOrder) {
-                $product = Product::find($productOrder['id']);
-                if ($product['quantity'] >= $productOrder->pivot->quantity) {
-                    $product->decrement('quantity', $productOrder->pivot->quantity);
+            foreach ($this->orderRepo->relation($id) as $productOrder) {
+                $product = $this->productRepo->find($productOrder['id']);
+                if ($product['quantity'] >= $this->productRepo->getQuantity($productOrder)) {
+                    $product->decrement('quantity', $this->productRepo->getQuantity($productOrder));
                 } else {
                     return redirect()->route('home')
                         ->with('error', __('not enough', ['attr' => $product['name'], 'qtt' => $product['quantity']]));

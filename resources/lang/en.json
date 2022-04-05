@@ -105,5 +105,10 @@
     "cancel order": "Cancel Order",
     "confirm cancel": "Do you want to cancel this order?",
     "reorder": "Re-order",
-    "confirm reorder": "Would you like to order this again?"
+    "confirm reorder": "Would you like to order this again?",
+    "info order": "Order information",
+    "receive require": "We have received your order and are processing it. You will receive a follow-up notification when your order is ready to be shipped.",
+    "show order status": "Show order status",
+    "note": "Note: You should only receive the goods when the order status is 'delivering'. When receiving, you should check the correct information to receive the correct package",
+    "wrong order information": "Wrong order information"
 }

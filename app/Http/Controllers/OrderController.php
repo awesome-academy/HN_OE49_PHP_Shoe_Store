@@ -2,29 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderProduct;
-use App\Models\Product;
+use App\Mail\OrderShipped;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
     protected $productRepo;
     protected $brandRepo;
     protected $orderRepo;
+    protected $orderProductRepo;
 
     public function __construct(
         ProductRepositoryInterface $productRepo,
         BrandRepositoryInterface $brandRepo,
-        OrderRepositoryInterface $orderRepo
+        OrderRepositoryInterface $orderRepo,
+        OrderProductRepositoryInterface $orderProductRepo
     ) {
         $this->productRepo = $productRepo;
         $this->brandRepo = $brandRepo;
         $this->orderRepo = $orderRepo;
+        $this->orderProductRepo = $orderProductRepo;
     }
 
     public function infoOrder()
@@ -49,9 +53,9 @@ class OrderController extends Controller
         if (Session::has('cart')) {
             $order_status = config('orderstatus.waiting');
             $cart = session()->get('cart');
+            $user = Auth::user();
             $total_price = 0;
             
-            $order_product = [];
             foreach ($cart as $key => $value) {
                 $prd = $this->productRepo->find($key);
                 if ($prd['quantity'] >= $value['quantity']) {
@@ -62,19 +66,19 @@ class OrderController extends Controller
                         ->with('error', __('not enough', ['attr' => $prd['name'], 'qtt' => $prd['quantity']]));
                 }
             }
-            $orders = $this->orderRepo->create([
-                'user_id' => Auth::user()->id,
+            $order = $this->orderRepo->create([
+                'user_id' => $user->id,
                 'total_price' => $total_price,
                 'order_status_id' => $order_status,
             ]);
             foreach ($cart as $key => $value) {
-                $order_product[$key] = [
-                    'order_id' => $orders->id,
+                $this->orderProductRepo->create([
+                    'order_id' => $order->id,
                     'product_id' => $key,
                     'quantity' => $value['quantity'],
-                ];
+                ]);
             }
-            OrderProduct::insert($order_product);
+            Mail::to($user)->send(new OrderShipped($order, $cart, $user));
             session()->forget('cart');
 
             return redirect()->route('home')->with('success', __('thanks order'));
@@ -97,11 +101,15 @@ class OrderController extends Controller
         $shipping = 0;
         $total_price = 0;
         $order = $this->orderRepo->getOrderDetail(Auth::user()->id, $id);
-        foreach ($this->orderRepo->relation($order->id) as $product) {
-            $total_price += $product->price * $this->productRepo->getQuantity($product);
+        if (!empty($order)) {
+            foreach ($this->orderRepo->relation($order->id) as $product) {
+                $total_price += $product->price * $this->productRepo->getQuantity($product);
+            }
+    
+            return view('users.history.show')->with(compact('brands', 'order', 'shipping', 'total_price'));
+        } else {
+            return redirect()->back()->with('error', __("wrong order information"));
         }
-
-        return view('users.history.show')->with(compact('brands', 'order', 'shipping', 'total_price'));
     }
     
     public function updatestatus($id)

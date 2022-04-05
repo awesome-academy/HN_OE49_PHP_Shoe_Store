@@ -105,5 +105,10 @@
     "confirm cancel": "Bạn có muốn hủy đơn đặt hàng này không?",
     "cancel order": "Hủy đơn hàng",
     "reorder": "Đặt hàng lại",
-    "confirm reorder": "Bạn có muốn đặt lại đơn hàng này?"
+    "confirm reorder": "Bạn có muốn đặt lại đơn hàng này?",
+    "info order": "Thông tin đơn đặt hàng",
+    "receive require": "Chúng tôi đã nhận được đơn đặt hàng của bạn và đang xử lý. Bạn sẽ nhận được thông báo tiếp theo khi đơn hàng của bạn sẵn sàng được giao.",
+    "show order status": "Hiển thị trạng thái đơn hàng",
+    "note": "Lưu ý: Bạn chỉ nên nhận hàng khi trạng thái đơn hàng là 'đang giao'. Khi nhận nên kiểm tra đúng thông tin để nhận đúng kiện hàng",
+    "wrong order information": "Sai thông tin đơn hàng"
 } 

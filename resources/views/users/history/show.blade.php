@@ -16,11 +16,24 @@
                     </span>
                 </div>
                 <div class="d-flex fs-5">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <p class="fw-bolder">{{ Auth::user()->name }}</p>
                         <p class="fw-bolder">{{ Auth::user()->phone }}</p>
                     </div>
-                    <div class="col-lg-6">{{ Auth::user()->address }}</div>
+                    <div class="col-lg-5">{{ Auth::user()->address }}</div>
+                    <div class="col-lg-4">
+                        {{ __('status') . ": " }}
+                        @switch($order->orderStatus->id)
+                            @case(config('orderstatus.delivered'))
+                                <div class="badge bg-success">{{ Str::ucfirst($order->orderStatus->name) }}</div>
+                                @break
+                            @case(config('orderstatus.cancelled'))
+                                <div class="badge bg-secondary">{{ Str::ucfirst($order->orderStatus->name) }}</div>
+                                @break
+                            @default
+                                <div class="badge bg-warning">{{ Str::ucfirst($order->orderStatus->name) }}</div>
+                        @endswitch
+                    </div>
                 </div>
             </div>     
         </div>

@@ -110,5 +110,8 @@
     "receive require": "We have received your order and are processing it. You will receive a follow-up notification when your order is ready to be shipped.",
     "show order status": "Show order status",
     "note": "Note: You should only receive the goods when the order status is 'delivering'. When receiving, you should check the correct information to receive the correct package",
-    "wrong order information": "Wrong order information"
+    "wrong order information": "Wrong order information",
+    "filter": "Filter",
+    "7 days ago": "7 days ago",
+    "sub month": "1 month ago"
 }

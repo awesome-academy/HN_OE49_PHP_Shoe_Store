@@ -3,6 +3,7 @@ namespace App\Repositories\Product;
 
 use App\Models\Product;
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
@@ -66,5 +67,23 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $this->model->with(['orders' => function ($query) {
             $query->where('order_status_id', config('orderstatus.delivered'));
         }])->findorfail($id);
+    }
+
+    public function getProductSold($sub)
+    {
+        if ($sub == 'month') {
+            $subFilter = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->toDateString();
+        } else {
+            $subFilter = Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();
+        }
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+        return $this->model->with([
+            'brand',
+            'orders' => function ($query) use ($subFilter, $now) {
+                $query->where('order_status_id', config('orderstatus.delivered'))
+                    ->whereBetween('orders.updated_at', [$subFilter, $now]);
+            }
+        ])->get();
     }
 }

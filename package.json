@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@rateyo/jquery": "^3.0.0-alpha.2",
+        "chart.js": "^3.7.1",
         "rateyo": "^3.0.0-alpha.2"
     }
 }

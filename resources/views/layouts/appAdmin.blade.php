@@ -143,5 +143,6 @@
     </main>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/delete.js') }}"></script>
+    <script src="{{ asset('js/chart.js') }}"></script>
 </body>
 </html>

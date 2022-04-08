@@ -88,6 +88,39 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a id="notifications" class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-bell"></i>
+                                    @if (!auth()->user()->unreadNotifications->isEmpty())
+                                        <span class="pending badge bg-primary badge-number">
+                                            {{ auth()->user()->unreadNotifications->count() }}
+                                        </span>
+                                    @endif
+                                </a><!-- End Notification Icon -->
+                
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                                    <li class="dropdown-header">
+                                        {{ __('notification') }}
+                                        <a href="{{ route('mark-as-read-all') }}">
+                                            <span class="mark-as-read badge rounded-pill bg-primary p-2 ms-2 text-light">
+                                                {{ __('mark_as_read_all') }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <ul class="p-0 m-0" id="notification-list">
+                                            @foreach (Auth::user()->notifications as $notification)
+                                                <li class="notification-item {{ $notification->unread() ? 'unread' : '' }}">
+                                                    <a class="text-decoration-none" href="{{ route('mark-as-read', [$notification->data['order_id'], $notification->id]) }}">
+                                                        <p class="mb-1">{{ __($notification->data['title']) }}</p>
+                                                        <small>{{ __($notification->data['content'], ['attr' => $notification->data['order_id']]) }}</small>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                </ul><!-- End Notification Dropdown Items -->
+                            </li>
                         @endguest
                         <li class="nav_item">
                             @include('partials/language_switcher')

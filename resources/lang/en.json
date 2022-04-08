@@ -113,5 +113,17 @@
     "wrong order information": "Wrong order information",
     "filter": "Filter",
     "7 days ago": "7 days ago",
-    "sub month": "1 month ago"
+    "sub month": "1 month ago",
+    "notification": "Notification",
+    "mark_as_read_all": "Mark as read all",
+    "title noti 1": "Order Success",
+    "content noti 1": "We have received your order #:attr. We will send you an email shortly",
+    "title noti 2": "Orders are being delivered",
+    "content noti 2": "Your order #:attr is in transit and is expected to be delivered in the next 1-2 days",
+    "title noti 3": "Delivery successful",
+    "content noti 3": "Order #:attr has been successfully delivered to you",
+    "title noti 4": "Accept cancellation request",
+    "content noti 4": "Your order #:attr has been successfully canceled",
+    "title noti 5": "Order has been cancelled",
+    "content noti 6": "Your order #:attr has been cancelled. We will contact you soon"
 }

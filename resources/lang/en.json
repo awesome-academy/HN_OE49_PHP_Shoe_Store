@@ -112,8 +112,6 @@
     "note": "Note: You should only receive the goods when the order status is 'delivering'. When receiving, you should check the correct information to receive the correct package",
     "wrong order information": "Wrong order information",
     "filter": "Filter",
-    "7 days ago": "7 days ago",
-    "sub month": "1 month ago",
     "notification": "Notification",
     "mark_as_read_all": "Mark as read all",
     "title noti 1": "Order Success",
@@ -125,5 +123,9 @@
     "title noti 4": "Accept cancellation request",
     "content noti 4": "Your order #:attr has been successfully canceled",
     "title noti 5": "Order has been cancelled",
-    "content noti 6": "Your order #:attr has been cancelled. We will contact you soon"
+    "content noti 6": "Your order #:attr has been cancelled. We will contact you soon",
+    "sub day": "Last week",
+    "sub month": "Last month",
+    "quantity sold": "Quantity Sold",
+    "today": "Today"
 }

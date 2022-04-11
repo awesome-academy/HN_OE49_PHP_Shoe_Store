@@ -112,8 +112,6 @@
     "note": "Lưu ý: Bạn chỉ nên nhận hàng khi trạng thái đơn hàng là 'đang giao'. Khi nhận nên kiểm tra đúng thông tin để nhận đúng kiện hàng",
     "wrong order information": "Sai thông tin đơn hàng",
     "filter": "Lọc",
-    "7 days ago": "7 ngày trước",
-    "sub month": "1 tháng trước",
     "title noti 1": "Đặt hàng thành công",
     "notification": "Thông báo",
     "mark_as_read_all": "Đọc tất cả",
@@ -125,5 +123,9 @@
     "title noti 4": "Chấp nhận yêu cầu hủy đơn",
     "content noti 4": "Đơn hàng #:attr của bạn đã được hủy thành công",
     "title noti 5": "Đơn hàng đã bị hủy",
-    "content noti 6": "Đơn hàng #:attr của bạn đã bị hủy. Chúng tôi sẽ sớm liên lạc với bạn"
+    "content noti 6": "Đơn hàng #:attr của bạn đã bị hủy. Chúng tôi sẽ sớm liên lạc với bạn",
+    "sub day": "Tuần trước",
+    "sub month": "Tháng trước",
+    "quantity sold": "Số lượng sản phẩm đã bán",
+    "today": "Hôm nay"
 } 

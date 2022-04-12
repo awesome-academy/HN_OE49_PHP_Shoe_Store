@@ -98,29 +98,20 @@ $(document).ready(function() {
         data: {
             labels: brand_labels,
             datasets: [{
-                label: 'Quantity Sold',
-                data: brand_quantity,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
+                label: label,
+                data: brand_quantity2,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         },
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
                 }
             }
         },
@@ -152,4 +143,18 @@ $(document).ready(function() {
         </li>`;
         $("#notification-list").prepend(notificationItem);
     });
+
+    $('#filter').change(function() {
+        var selectedVal = $("#filter option:selected").val();
+        if (selectedVal == 'day') {
+            myChart.data.datasets[0].data = brand_quantity;
+        } else if (selectedVal == 'week') {
+            myChart.data.datasets[0].data = brand_quantity2;
+        } else {
+            myChart.data.datasets[0].data = brand_quantity3;
+        }
+        $('#btn-filter').click(function() {
+            myChart.update();
+        })
+    })
 });

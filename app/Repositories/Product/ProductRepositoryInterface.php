@@ -13,4 +13,5 @@ interface ProductRepositoryInterface extends RepositoryInterface
     public function getProductByAvgRating();
     public function getProductByOrderDelivered($id);
     public function getProductSold($sub);
+    public function getSumQuantity($product);
 }

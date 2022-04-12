@@ -71,12 +71,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getProductSold($sub)
     {
+        $dt = Carbon::now('Asia/Ho_Chi_Minh');
+        $now = $dt->toDateTimeString();
         if ($sub == 'month') {
-            $subFilter = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->toDateString();
+            $subFilter = $dt->subMonth()->toDateTimeString();
+        } elseif ($sub == 'week') {
+            $subFilter = $dt->subWeek()->toDateTimeString();
         } else {
-            $subFilter = Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();
+            $subFilter = $dt->startOfDay()->toDateTimeString();
+            $now = $dt->endOfDay()->toDateTimeString();
         }
-        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
         return $this->model->with([
             'brand',
@@ -85,5 +89,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                     ->whereBetween('orders.updated_at', [$subFilter, $now]);
             }
         ])->get();
+    }
+
+    public function getSumQuantity($product)
+    {
+        return $product->orders->sum('pivot.quantity');
     }
 }

@@ -14,7 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
-use App\Models\OrderProduct;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +66,6 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/history', [OrderController::class, 'historyOrder'])->name('user.history');
     Route::get('/history/{id}/detail', [OrderController::class, 'showOrderDetail'])->name('user.history.detail');
     Route::put('/updatestatus/{id}', [OrderController::class, 'updatestatus'])->name('user.updatestatus');
+    Route::get('mark-at-read/{order_id}/{id}', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
+    Route::get('mark-at-read-all', [NotificationController::class, 'markAsReadAll'])->name('mark-as-read-all');
 });

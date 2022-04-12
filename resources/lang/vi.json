@@ -113,5 +113,17 @@
     "wrong order information": "Sai thông tin đơn hàng",
     "filter": "Lọc",
     "7 days ago": "7 ngày trước",
-    "sub month": "1 tháng trước"
+    "sub month": "1 tháng trước",
+    "title noti 1": "Đặt hàng thành công",
+    "notification": "Thông báo",
+    "mark_as_read_all": "Đọc tất cả",
+    "content noti 1": "Chúng tôi đã nhận được đơn hàng #:attr của bạn. Chúng tôi sẽ sớm gửi mail thông báo cho bạn",
+    "title noti 2": "Đơn hàng đang được giao",
+    "content noti 2": "Đơn hàng #:attr của bạn đang trong quá trình vận chuyển và dự kiến được giao trong 1-2 ngày tới",
+    "title noti 3": "Giao hàng thành công",
+    "content noti 3": "Đơn hàng #:attr đã giao thành công đến bạn",
+    "title noti 4": "Chấp nhận yêu cầu hủy đơn",
+    "content noti 4": "Đơn hàng #:attr của bạn đã được hủy thành công",
+    "title noti 5": "Đơn hàng đã bị hủy",
+    "content noti 6": "Đơn hàng #:attr của bạn đã bị hủy. Chúng tôi sẽ sớm liên lạc với bạn"
 } 

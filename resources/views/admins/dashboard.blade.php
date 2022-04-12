@@ -22,5 +22,4 @@
         var brand_labels = JSON.parse('{!! json_encode($label) !!}');
         var brand_quantity = JSON.parse('{!! json_encode($quantity) !!}');
     </script>
-    <script src="{{ asset('js/statistic.js') }}"></script>
 @endsection

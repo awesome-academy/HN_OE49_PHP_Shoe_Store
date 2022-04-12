@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderShipped;
+use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -11,6 +12,8 @@ use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use Pusher\Pusher;
 
 class OrderController extends Controller
 {
@@ -80,6 +83,27 @@ class OrderController extends Controller
             }
             Mail::to($user)->send(new OrderShipped($order, $cart, $user));
             session()->forget('cart');
+            $data = [
+                'order_id' => $order->id,
+                'title' => 'title noti 1',
+                'content' => 'content noti 1',
+            ];
+
+            $options = [
+                'cluster' => 'ap1',
+                'useTLS' => true,
+            ];
+
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+
+            $pusher->trigger('NotificationEvent', 'send-notification', $data);
+
+            Notification::send(Auth::user(), new OrderNotification($data));
 
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {

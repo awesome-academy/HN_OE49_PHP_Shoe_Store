@@ -3,25 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Orders\UpdateRequest;
+use App\Notifications\OrderNotification;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use Pusher\Pusher;
 
 class AdminOrderController extends Controller
 {
     protected $orderRepo;
     protected $orderStatusRepo;
     protected $productRepo;
+    protected $userRepo;
 
     public function __construct(
         OrderRepositoryInterface $orderRepo,
         OrderStatusRepositoryInterface $orderStatusRepo,
-        ProductRepositoryInterface $productRepo
+        ProductRepositoryInterface $productRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->orderRepo = $orderRepo;
         $this->orderStatusRepo = $orderStatusRepo;
         $this->productRepo = $productRepo;
+        $this->userRepo = $userRepo;
     }
     /**
      * Display a listing of the resource.
@@ -97,12 +104,43 @@ class AdminOrderController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $order = $this->orderRepo->find($id);
-        if ($request->order_status_id == config('orderstatus.cancelled')) {
-            foreach ($this->orderRepo->relation($order->id) as $product) {
-                $product->quantity += $this->productRepo->getQuantity($product);
-                $this->productRepo->update($product->id, ['quantity' => $product->quantity]);
-            }
+        $user = $this->userRepo->find($order->user_id);
+        $currentStatus = $this->orderStatusRepo->find($order->order_status_id)->name;
+        $newStatus = $this->orderStatusRepo->find($request->order_status_id)->name;
+
+        if ($request->order_status_id < $order->order_status_id) {
+            return redirect()->route('orders.index')
+                ->with('error', __('update order fail', ['current' => $currentStatus, 'new' => $newStatus]));
         }
+
+        if ($request->order_status_id != config('orderstatus.preparing')) {
+            if ($request->order_status_id == config('orderstatus.cancelled')) {
+                foreach ($this->orderRepo->relation($order->id) as $product) {
+                    $product->quantity += $this->productRepo->getQuantity($product);
+                    $this->productRepo->update($product->id, ['quantity' => $product->quantity]);
+                }
+                $data = [
+                    'order_id' => $order->id,
+                    'title' => 'admin title cancelled order',
+                    'content' => 'admin content cancelled order',
+                ];
+            } elseif ($request->order_status_id == config('orderstatus.delivering')) {
+                $data = [
+                    'order_id' => $order->id,
+                    'title' => 'admin delivering order title',
+                    'content' => 'admin delivering order content',
+                ];
+            } elseif ($request->order_status_id == config('orderstatus.delivered')) {
+                $data = [
+                    'order_id' => $order->id,
+                    'title' => 'admin delivered order title',
+                    'content' => 'admin delivered order content',
+                ];
+            }
+
+            $this->sendNoti($user, $data);
+        }
+
         $this->orderRepo->update($id, $request->only('order_status_id'));
 
         return redirect()->route('orders.index')
@@ -118,5 +156,24 @@ class AdminOrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function sendNoti($user, $data)
+    {
+        $options = [
+            'cluster' => 'ap1',
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('NotificationEvent', 'send-notification', $data);
+
+        Notification::send($user, new OrderNotification($data));
     }
 }

@@ -24,4 +24,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $query->where('order_status_id', config('orderstatus.delivered'));
         }])->where('id', $id)->first();
     }
+
+    public function findAdmin()
+    {
+        return $this->model->where('role_id', config('auth.roles.admin'))->get();
+    }
 }

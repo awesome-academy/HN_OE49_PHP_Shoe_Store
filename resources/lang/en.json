@@ -128,5 +128,12 @@
     "sub day": "Last week",
     "sub month": "Last month",
     "quantity sold": "Quantity Sold",
-    "today": "Today"
+    "today": "Today",
+    "statistic order": "Weekly statistics",
+    "created_at": "Created At",
+    "updated_at_delivered": "Delivered Date",
+    "order_id": "Order ID",
+    "table": "Statistical tables",
+    "from date": "From date",
+    "to date": "To date"
 }

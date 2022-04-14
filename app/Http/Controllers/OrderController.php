@@ -51,7 +51,7 @@ class OrderController extends Controller
         }
     }
 
-    public function postOrder(Request $request)
+    public function postOrder()
     {
         if (Session::has('cart')) {
             $order_status = config('orderstatus.waiting');
@@ -81,29 +81,17 @@ class OrderController extends Controller
                     'quantity' => $value['quantity'],
                 ]);
             }
+            
             Mail::to($user)->send(new OrderShipped($order, $cart, $user));
             session()->forget('cart');
+
             $data = [
                 'order_id' => $order->id,
-                'title' => 'title noti 1',
-                'content' => 'content noti 1',
+                'title' => 'user order title successful',
+                'content' => 'user successful order content',
             ];
-
-            $options = [
-                'cluster' => 'ap1',
-                'useTLS' => true,
-            ];
-
-            $pusher = new Pusher(
-                env('PUSHER_APP_KEY'),
-                env('PUSHER_APP_SECRET'),
-                env('PUSHER_APP_ID'),
-                $options
-            );
-
-            $pusher->trigger('NotificationEvent', 'send-notification', $data);
-
-            Notification::send(Auth::user(), new OrderNotification($data));
+            
+            $this->sendNoti(Auth::user(), $data);
 
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {
@@ -147,6 +135,13 @@ class OrderController extends Controller
                 $product->update();
             }
             $order->update();
+            $data = [
+                'order_id' => $order->id,
+                'title' => 'user title accept cancel order',
+                'content' => 'user content accept cancel order',
+            ];
+            
+            $this->sendNoti(Auth::user(), $data);
     
             return redirect()->route('user.history')->with('success', __('success order cancel'));
         } elseif ($status == config('orderstatus.cancelled')) {
@@ -163,9 +158,36 @@ class OrderController extends Controller
                 'order_status_id' => config('orderstatus.waiting'),
             ]);
 
+            $data = [
+                'order_id' => $order->id,
+                'title' => 'user order title successful',
+                'content' => 'user successful order content',
+            ];
+
+            $this->sendNoti(Auth::user(), $data);
+
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {
             return redirect()->route('user.history')->with('error', __('fail order cancel'));
         }
+    }
+
+    public function sendNoti($user, $data)
+    {
+        $options = [
+            'cluster' => 'ap1',
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('NotificationEvent', 'send-notification', $data);
+
+        Notification::send($user, new OrderNotification($data));
     }
 }

@@ -33,6 +33,6 @@ class DemoPusherEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('send-notification');
+        return new PrivateChannel('send-notification');
     }
 }

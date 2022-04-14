@@ -2,7 +2,10 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
+use App\Notifications\OrderNotification;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Notification;
+use Pusher\Pusher;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -28,5 +31,24 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function findAdmin()
     {
         return $this->model->where('role_id', config('auth.roles.admin'))->get();
+    }
+
+    public function notify($user, $data)
+    {
+        $options = [
+            'cluster' => 'ap1',
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('NotificationEvent', 'send-notification', $data);
+
+        Notification::send($user, new OrderNotification($data));
     }
 }

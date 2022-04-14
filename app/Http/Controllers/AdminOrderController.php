@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Orders\UpdateRequest;
-use App\Notifications\OrderNotification;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
-use Pusher\Pusher;
 
 class AdminOrderController extends Controller
 {
@@ -104,11 +101,11 @@ class AdminOrderController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $order = $this->orderRepo->find($id);
-        $user = $this->userRepo->find($order->user_id);
-        $currentStatus = $this->orderStatusRepo->find($order->order_status_id)->name;
-        $newStatus = $this->orderStatusRepo->find($request->order_status_id)->name;
 
         if ($request->order_status_id < $order->order_status_id) {
+            $currentStatus = $this->orderStatusRepo->find($order->order_status_id)->name;
+            $newStatus = $this->orderStatusRepo->find($request->order_status_id)->name;
+
             return redirect()->route('orders.index')
                 ->with('error', __('update order fail', ['current' => $currentStatus, 'new' => $newStatus]));
         }
@@ -138,7 +135,9 @@ class AdminOrderController extends Controller
                 ];
             }
 
-            $this->sendNoti($user, $data);
+            $user = $this->userRepo->find($order->user_id);
+            
+            $this->userRepo->notify($user, $data);
         }
 
         $this->orderRepo->update($id, $request->only('order_status_id'));
@@ -156,24 +155,5 @@ class AdminOrderController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function sendNoti($user, $data)
-    {
-        $options = [
-            'cluster' => 'ap1',
-            'useTLS' => true,
-        ];
-
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-
-        $pusher->trigger('NotificationEvent', 'send-notification', $data);
-
-        Notification::send($user, new OrderNotification($data));
     }
 }

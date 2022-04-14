@@ -16,7 +16,6 @@ class OrderShipped extends Mailable
 
     protected $order;
     protected $user;
-    protected $orderUrl;
     protected $cart;
     /**
      * Create a new message instance.
@@ -27,7 +26,6 @@ class OrderShipped extends Mailable
     {
         $this->order = $order;
         $this->user = $user;
-        $this->orderUrl = route('user.history.detail', $order->id);
         $this->cart = $cart;
     }
 
@@ -41,7 +39,7 @@ class OrderShipped extends Mailable
         return $this->markdown('emails.orders.shipped')
             ->with([
                 'user' => $this->user,
-                'url' => $this->orderUrl,
+                'url' => route('user.history.detail', $this->order->id),
                 'cart' => $this->cart,
             ]);
     }

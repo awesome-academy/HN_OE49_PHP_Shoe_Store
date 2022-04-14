@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderShipped;
-use App\Notifications\OrderNotification;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
-use Pusher\Pusher;
 
 class OrderController extends Controller
 {
@@ -21,17 +18,20 @@ class OrderController extends Controller
     protected $brandRepo;
     protected $orderRepo;
     protected $orderProductRepo;
+    protected $userRepo;
 
     public function __construct(
         ProductRepositoryInterface $productRepo,
         BrandRepositoryInterface $brandRepo,
         OrderRepositoryInterface $orderRepo,
-        OrderProductRepositoryInterface $orderProductRepo
+        OrderProductRepositoryInterface $orderProductRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->productRepo = $productRepo;
         $this->brandRepo = $brandRepo;
         $this->orderRepo = $orderRepo;
         $this->orderProductRepo = $orderProductRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function infoOrder()
@@ -91,7 +91,7 @@ class OrderController extends Controller
                 'content' => 'user successful order content',
             ];
             
-            $this->sendNoti(Auth::user(), $data);
+            $this->userRepo->notify($user, $data);
 
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {
@@ -141,7 +141,7 @@ class OrderController extends Controller
                 'content' => 'user content accept cancel order',
             ];
             
-            $this->sendNoti(Auth::user(), $data);
+            $this->userRepo->notify(Auth::user(), $data);
     
             return redirect()->route('user.history')->with('success', __('success order cancel'));
         } elseif ($status == config('orderstatus.cancelled')) {
@@ -164,30 +164,11 @@ class OrderController extends Controller
                 'content' => 'user successful order content',
             ];
 
-            $this->sendNoti(Auth::user(), $data);
+            $this->userRepo->notify(Auth::user(), $data);
 
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {
             return redirect()->route('user.history')->with('error', __('fail order cancel'));
         }
-    }
-
-    public function sendNoti($user, $data)
-    {
-        $options = [
-            'cluster' => 'ap1',
-            'useTLS' => true,
-        ];
-
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-
-        $pusher->trigger('NotificationEvent', 'send-notification', $data);
-
-        Notification::send($user, new OrderNotification($data));
     }
 }

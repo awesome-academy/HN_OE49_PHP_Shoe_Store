@@ -3,6 +3,7 @@ namespace App\Repositories\Order;
 
 use App\Models\Order;
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 
 class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 {
@@ -44,5 +45,15 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         return $this->model::where('user_id', $user_id)
             ->with('products', 'orderStatus')
             ->find($order_id);
+    }
+
+    public function getOrderDelivered()
+    {
+        return $this->model->where('order_status_id', config('orderstatus.delivered'))
+            ->whereBetween('updated_at', [
+                Carbon::now('Asia/Ho_Chi_Minh')->subWeek()->startOfWeek(Carbon::SUNDAY),
+                Carbon::now('Asia/Ho_Chi_Minh')->subWeek()->endOfWeek(Carbon::SATURDAY)
+            ])
+            ->get();
     }
 }

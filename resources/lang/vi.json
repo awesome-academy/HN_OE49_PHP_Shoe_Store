@@ -128,5 +128,12 @@
     "sub day": "Tuần trước",
     "sub month": "Tháng trước",
     "quantity sold": "Số lượng sản phẩm đã bán",
-    "today": "Hôm nay"
+    "today": "Hôm nay",
+    "statistic order": "Báo cáo doanh thu hàng tuần",
+    "created_at": "Ngày tạo",
+    "updated_at_delivered": "Ngày hoàn thành",
+    "order_id": "Order ID",
+    "table": "Bảng thống kê",
+    "from date": "Từ ngày",
+    "to date": "Đến ngày"
 } 

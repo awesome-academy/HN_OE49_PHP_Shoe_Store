@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/script.js": "/js/script.js",
+    "/js/pusher.js": "/js/pusher.js",
     "/js/delete.js": "/js/delete.js",
     "/js/chart.js": "/js/chart.js",
     "/css/app.css": "/css/app.css",

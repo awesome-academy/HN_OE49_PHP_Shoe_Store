@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Orders\UpdateRequest;
+use App\Notifications\OrderNotification;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class AdminOrderController extends Controller
 {
@@ -137,7 +139,7 @@ class AdminOrderController extends Controller
 
             $user = $this->userRepo->find($order->user_id);
             
-            $this->userRepo->notify($user, $data);
+            Notification::send($user, new OrderNotification($data));
         }
 
         $this->orderRepo->update($id, $request->only('order_status_id'));

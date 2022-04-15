@@ -108,7 +108,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <ul class="p-0 m-0" id="notification-list">
+                                        <ul class="px-2 m-0" id="notification-list">
                                             @foreach (Auth::user()->notifications as $notification)
                                                 <li class="notification-item {{ $notification->unread() ? 'unread' : '' }}">
                                                     <a class="text-decoration-none" href="{{ route('mark-as-read', [$notification->data['order_id'], $notification->id]) }}">
@@ -178,7 +178,11 @@
             </div>
         </main>
     </div>
+    <script>
+        window.translationJsons = {!! $translationJson !!};
+    </script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/pusher.js') }}"></script>
     <script type="text/javascript" src=" {{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript" src=" {{ asset('bower_components/rateyo/min/jquery.rateyo.min.js') }}"></script>
 </body>

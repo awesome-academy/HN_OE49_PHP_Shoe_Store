@@ -127,7 +127,7 @@ $(document).ready(function() {
             labels: brand_labels,
             datasets: [{
                 label: label,
-                data: brand_quantity2,
+                data: brand_quantity_week,
                 backgroundColor: 'rgba(54, 162, 235, 0.7)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -148,11 +148,11 @@ $(document).ready(function() {
     $('#filter').change(function() {
         var selectedVal = $("#filter option:selected").val();
         if (selectedVal == 'day') {
-            myChart.data.datasets[0].data = brand_quantity;
+            myChart.data.datasets[0].data = brand_quantity_day;
         } else if (selectedVal == 'week') {
-            myChart.data.datasets[0].data = brand_quantity2;
+            myChart.data.datasets[0].data = brand_quantity_week;
         } else {
-            myChart.data.datasets[0].data = brand_quantity3;
+            myChart.data.datasets[0].data = brand_quantity_month;
         }
         $('#btn-filter').click(function() {
             myChart.update();

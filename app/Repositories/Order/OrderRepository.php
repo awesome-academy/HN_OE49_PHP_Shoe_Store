@@ -49,7 +49,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
     public function getOrderDelivered()
     {
-        return $this->model->where('order_status_id', config('orderstatus.delivered'))
+        return $this->model::where('order_status_id', config('orderstatus.delivered'))
             ->whereBetween('updated_at', [
                 Carbon::now('Asia/Ho_Chi_Minh')->subWeek()->startOfWeek(Carbon::SUNDAY),
                 Carbon::now('Asia/Ho_Chi_Minh')->subWeek()->endOfWeek(Carbon::SATURDAY)

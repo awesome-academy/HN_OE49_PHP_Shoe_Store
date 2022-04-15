@@ -23,8 +23,8 @@
     <script>
         var label = JSON.parse('{!! json_encode(__("quantity sold")) !!}')
         var brand_labels = JSON.parse('{!! json_encode($label) !!}');
-        var brand_quantity = JSON.parse('{!! json_encode($quantity1) !!}');
-        var brand_quantity2 = JSON.parse('{!! json_encode($quantity2) !!}');
-        var brand_quantity3 = JSON.parse('{!! json_encode($quantity3) !!}');
+        var brand_quantity_day = JSON.parse('{!! json_encode($quantity_day) !!}');
+        var brand_quantity_week = JSON.parse('{!! json_encode($quantity_week) !!}');
+        var brand_quantity_month = JSON.parse('{!! json_encode($quantity_month) !!}');
     </script>
 @endsection

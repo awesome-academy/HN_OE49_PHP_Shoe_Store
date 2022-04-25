@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderShipped;
+use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Repositories\Product\ProductRepositoryInterface;
@@ -11,6 +12,7 @@ use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -91,7 +93,7 @@ class OrderController extends Controller
                 'content' => 'user successful order content',
             ];
             
-            $this->userRepo->notify($user, $data);
+            Notification::send($user, new OrderNotification($data));
 
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {
@@ -140,8 +142,8 @@ class OrderController extends Controller
                 'title' => 'user title accept cancel order',
                 'content' => 'user content accept cancel order',
             ];
-            
-            $this->userRepo->notify(Auth::user(), $data);
+
+            Notification::send(Auth::user(), new OrderNotification($data));
     
             return redirect()->route('user.history')->with('success', __('success order cancel'));
         } elseif ($status == config('orderstatus.cancelled')) {
@@ -164,7 +166,7 @@ class OrderController extends Controller
                 'content' => 'user successful order content',
             ];
 
-            $this->userRepo->notify(Auth::user(), $data);
+            Notification::send(Auth::user(), new OrderNotification($data));
 
             return redirect()->route('home')->with('success', __('thanks order'));
         } else {

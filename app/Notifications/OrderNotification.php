@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Pusher\Pusher;
 
 class OrderNotification extends Notification
 {
@@ -41,6 +42,21 @@ class OrderNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return $this->data;
+        $data = array_merge(['id' => $this->id], $this->data);
+        $options = [
+            'cluster' => 'ap1',
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('NotificationEvent', 'send-notification', $data);
+
+        return $data;
     }
 }

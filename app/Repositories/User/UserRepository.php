@@ -32,4 +32,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->where('role_id', config('auth.roles.admin'))->get();
     }
+
+    public function findByWhere($arr)
+    {
+        return $this->model->where($arr)->get();
+    }
 }

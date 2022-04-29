@@ -37,4 +37,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->where($arr)->get();
     }
+
+    public function insert($data)
+    {
+        return $this->model->insert($data);
+    }
 }

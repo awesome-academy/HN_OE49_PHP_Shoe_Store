@@ -9,4 +9,5 @@ interface UserRepositoryInterface extends RepositoryInterface
     public function getUserByOrderDelivered($id);
     public function findAdmin();
     public function findByWhere($arr);
+    public function insert($data);
 }

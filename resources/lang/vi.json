@@ -135,5 +135,6 @@
     "order_id": "Order ID",
     "table": "Bảng thống kê",
     "from date": "Từ ngày",
-    "to date": "Đến ngày"
+    "to date": "Đến ngày",
+    "not admin": "Bạn không được cấp quyền vào trang này"
 } 

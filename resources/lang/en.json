@@ -135,5 +135,6 @@
     "order_id": "Order ID",
     "table": "Statistical tables",
     "from date": "From date",
-    "to date": "To date"
+    "to date": "To date",
+    "not admin": "You are not authorized to access this site"
 }

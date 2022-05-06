@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Repositories\User\UserRepositoryInterface;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     protected $userRepo;
-    protected $brandRepo;
 
     public function __construct(
         UserRepositoryInterface $userRepo
@@ -27,17 +26,9 @@ class UserController extends Controller
     {
         $users = $this->userRepo->getAllUser();
 
-        return view('admins.users.index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json([
+            'users' => UserResource::collection($users),
+        ], 200);
     }
 
     /**
@@ -63,32 +54,26 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        if ($user->role_id == config('auth.roles.admin')) {
-            return redirect()->route('users.index')->with('error', __('admin status'));
-        }
-
-        return view('admins.users.edit', compact('user'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        $user->update($request->only('status'));
+        $user = $this->userRepo->find($id);
+        if ($user->role_id == config('auth.roles.admin')) {
+            return response()->json([
+                'error' => __('admin status'),
+            ], 422);
+        }
+        $user = $this->userRepo->update($id, $request->only('status'));
 
-        return redirect()->route('users.index')->with('message', __('update success'));
+        return response()->json([
+            'message' => __('update success'),
+            'user' => new UserResource($user),
+        ], 200);
     }
 
     /**

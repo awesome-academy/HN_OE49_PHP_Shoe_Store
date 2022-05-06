@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::middleware('api.admin')->group(function () {
         Route::resource('api-brands', BrandController::class)->except(['create', 'edit']);
+        Route::resource('api-users', UserController::class)->only(['index', 'update']);
     });
 });

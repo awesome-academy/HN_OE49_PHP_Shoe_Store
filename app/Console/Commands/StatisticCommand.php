@@ -24,15 +24,22 @@ class StatisticCommand extends Command
      * @var string
      */
     protected $description = 'Send to new statistic';
+    protected $orderRepo;
+    protected $userRepo;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        OrderRepositoryInterface $orderRepo,
+        UserRepositoryInterface $userRepo
+    ) {
         parent::__construct();
+
+        $this->orderRepo = $orderRepo;
+        $this->userRepo = $userRepo;
     }
 
     /**
@@ -40,15 +47,12 @@ class StatisticCommand extends Command
      *
      * @return int
      */
-    public function handle(
-        OrderRepositoryInterface $orderRepo,
-        UserRepositoryInterface $userRepo
-    ) {
-        $datas = $orderRepo->getOrderDelivered();
-        $users = $userRepo->findAdmin();
+    public function handle()
+    {
+        $datas = $this->orderRepo->getOrderDelivered();
+        $users = $this->userRepo->findAdmin();
         foreach ($users as $user) {
-            Mail::to($user['email'])->send(new MailStatistic($datas));
+            Mail::to($user->email)->send(new MailStatistic($datas));
         }
-        $this->info('Successfully sent email to admin');
     }
 }

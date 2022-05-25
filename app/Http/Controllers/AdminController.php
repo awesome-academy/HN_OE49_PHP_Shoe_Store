@@ -35,9 +35,9 @@ class AdminController extends Controller
 
         return view('admins.dashboard')->with([
             'label' => array_keys($brands['today']),
-            'quantity1' => array_values($brands['today']),
-            'quantity2' => array_values($brands['week']),
-            'quantity3' => array_values($brands['month'])
+            'quantity_day' => array_values($brands['today']),
+            'quantity_week' => array_values($brands['week']),
+            'quantity_month' => array_values($brands['month'])
         ]);
     }
 }

@@ -1,11 +1,13 @@
 <?php
 namespace App\Repositories\User;
 
+use App\Mail\MailStatistic;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Notification;
 use Pusher\Pusher;
+use Illuminate\Support\Facades\Mail;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
